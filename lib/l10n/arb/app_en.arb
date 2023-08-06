@@ -1,0 +1,119 @@
+{
+    "@@locale": "en",
+    "signInTitle": "Sign In",
+    "@signInTitle": {
+        "description": "Title text for the sign in"
+    },
+    "sendOtpButtonText": "Send OTP",
+    "@sendOtpButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "signInInputLabelText": "Enter phone number",
+    "@signInInputLabelText": {
+        "description": "Title text for the sign in"
+    },
+    "signInInputErrorMessage": "Invalid phone format",
+    "@signInInputErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "otpVerifyTitle":"Otp Verification",
+    "@otpVerifyTitle": {
+        "description": "Title text for the sign in"
+    },
+    "notifySendVerificationText":"We have sent the code verification to",
+    "@notifySendVerificationText": {
+        "description": "Title text for the sign in"
+    },
+    "otpYourPhoneText":"Your Mobile Number",
+    "@otpYourPhoneText": {
+        "description": "Title text for the sign in"
+    },
+    "otpInputLabelText":"Verification code",
+    "@otpInputLabelText": {
+        "description": "Title text for the sign in"
+    },
+    "otpResendQuesText":"Resend code?",
+    "@otpResendQuesText": {
+        "description": "Title text for the sign in"
+    },
+    "otpSigninButtonText":"Sign In",
+    "@otpSigninButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "homeDeliveryButtonText":"Delivery",
+    "@homeDeliveryButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "homeMenuButtonText":"Menu",
+    "@homeMenuButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "homeSearchOptionText":"Search",
+    "@homeSearchOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "homeHistoryOptionText":"Order History",
+    "@homeHistoryOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "homeSettingsOptionText":"Settings",
+    "@homeSettingsOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "homeProfileOptionText":"Profile",
+    "@homeSearchOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "profileEmailLabel":"Enter Email",
+    "@profileEmailLabel": {
+        "description": "Title text for the sign in"
+    },
+    "profileEmailErrorMessage":"Invalid email format",
+    "@profileEmailErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "profileFirstNameLabel":"Enter First Name",
+    "@profileFirstNameLabel": {
+        "description": "Title text for the sign in"
+    },
+    "profileFirstNameErrorMessage":"Invalid first name",
+    "@profileFirstNameErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "profileLastNameLabel":"Enter Last Name",
+    "@profileLastNameLabel": {
+        "description": "Title text for the sign in"
+    },
+    "profileLastNameErrorMessage":"Invalid last name",
+    "@profileLastNameErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "profileTitle":"Account Profile",
+    "@profileTitle": {
+        "description": "Title text for the sign in"
+    },
+    "profileSaveButton":"Save",
+    "@profileSaveButton": {
+        "description": "Title text for the sign in"
+    },
+    "settingsTitle":"Settings",
+    "@settingsTitle": {
+        "description": "Title text for the sign in"
+    },
+    "languageSettingsSubtitle":"Language Settings",
+    "@languageSettingsSubtitle": {
+        "description": "Title text for the sign in"
+    },
+    "accountSettingsSubtitle":"Account Settings",
+    "@accountSettingsSubtitle": {
+        "description": "Title text for the sign in"
+    },
+    "deleteMyAccountText":"Delete My Account",
+    "@deleteMyAccountText": {
+        "description": "Title text for the sign in"
+    },
+    "signOutButtonText":"Sign Out",
+    "@signOutButtonText": {
+        "description": "Title text for the sign in"
+    }
+}

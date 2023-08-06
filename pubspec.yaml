@@ -1,0 +1,64 @@
+name: deleveus_app
+description: Flutter App for easy delevery services
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  bloc: ^8.1.2
+  delivery_repository:
+    path: lib/packages/delivery_repository
+  equatable: ^2.0.5
+  firebase_auth: ^4.6.3
+  firebase_core: ^2.14.0
+  flow_builder: ^0.0.9
+  flutter:
+    sdk: flutter
+  flutter_animate: ^4.2.0
+  flutter_bloc: ^8.1.3
+  flutter_localizations:
+    sdk: flutter
+  flutter_native_splash: ^2.3.1
+  flutter_staggered_grid_view: ^0.6.2
+  font_awesome_flutter: ^10.4.0
+  form_inputs:
+    path: lib/packages/form_inputs
+  formz: ^0.6.0
+  google_fonts: ^5.1.0
+  google_maps_flutter: ^2.3.1
+  intl: ^0.18.0
+  intl_translation: ^0.18.2
+  meta: ^1.9.1
+
+dev_dependencies:
+  bloc_test: ^9.1.2
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: "^0.13.1"
+  mocktail: ^0.3.0
+  very_good_analysis: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/imgs/
+    - assets/fonts/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/imgs/ic_deleveus-bg.png"
+  min_sdk_android: 20 # android min sdk min:16, default 21
+  adaptive_icon_background: "#93D679"
+  web:
+    generate: true
+    image_path: "assets/imgs/ic_deleveus.png"
+    # background_color: "#hexcode"
+    # theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/imgs/ic_deleveus.png"
+    icon_size: 48 # min:48, max:256, default: 48

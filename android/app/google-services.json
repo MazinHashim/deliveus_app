@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "315781797492",
+    "project_id": "deliveus-app",
+    "storage_bucket": "deliveus-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315781797492:android:5a98353e6e760856e4a321",
+        "android_client_info": {
+          "package_name": "com.deleveus.org.deleveus_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315781797492-so7le58iqsunqnsc5s8eglm7o3q7o0pp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgjYMBLmAhRta9RHvbH8kxs-UtrOGDfZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315781797492-so7le58iqsunqnsc5s8eglm7o3q7o0pp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

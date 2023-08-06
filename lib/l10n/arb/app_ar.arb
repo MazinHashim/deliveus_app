@@ -1,0 +1,119 @@
+{
+    "@@locale": "ar",
+    "signInTitle": "تسجيل الدخول",
+    "@signInTitle": {
+        "description": "نص عنوان صفحة تسجيل الدخول"
+    },
+    "sendOtpButtonText": "إرسال",
+    "@sendOtpButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "signInInputLabelText": "أدخل رقم الهاتف",
+    "@signInInputLabelText": {
+        "description": "Title text for the sign in"
+    },
+    "signInInputErrorMessage": "صيغة رقم الهاتف غير صحيحة",
+    "@signInInputErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "otpVerifyTitle":"التحقق من الهاتف",
+    "@otpVerifyTitle": {
+        "description": "Title text for the sign in"
+    },
+    "notifySendVerificationText":"تم إرسال كود التحقق",
+    "@notifySendVerificationText": {
+        "description": "Title text for the sign in"
+    },
+    "otpYourPhoneText":"لرقم هاتفك",
+    "@otpYourPhoneText": {
+        "description": "Title text for the sign in"
+    },
+    "otpInputLabelText":"كود التحقق",
+    "@otpInputLabelText": {
+        "description": "Title text for the sign in"
+    },
+    "otpResendQuesText":"إعادة إرسال الكود",
+    "@otpResendQuesText": {
+        "description": "Title text for the sign in"
+    },
+    "otpSigninButtonText":"تسجيل الدخول",
+    "@otpSigninButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "homeDeliveryButtonText":"خدمة التوصيل",
+    "@homeDeliveryButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "homeMenuButtonText":"قائمة الطعام",
+    "@homeMenuButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "homeSearchOptionText":"إبحث",
+    "@homeSearchOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "homeHistoryOptionText":"الطلبات السابقة",
+    "@homeHistoryOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "homeSettingsOptionText":"الإعدادات",
+    "@homeSettingsOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "homeProfileOptionText":"حسابي",
+    "@homeSearchOptionText": {
+        "description": "Title text for the sign in"
+    },
+    "profileEmailLabel":"أدخل البريد الإلكتروني",
+    "@profileEmailLabel": {
+        "description": "Title text for the sign in"
+    },
+    "profileEmailErrorMessage":"صيغة البريد الإلكتروني غير صحيحة",
+    "@profileEmailErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "profileFirstNameLabel":"أدخل الإسم الأول",
+    "@profileFirstNameLabel": {
+        "description": "Title text for the sign in"
+    },
+    "profileFirstNameErrorMessage":"الأسم الأول غير صحيح",
+    "@profileFirstNameErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "profileLastNameLabel":"أدخل الإسم الأخير",
+    "@profileLastNameLabel": {
+        "description": "Title text for the sign in"
+    },
+    "profileLastNameErrorMessage":"الأسم الأخير غير صحيح",
+    "@profileLastNameErrorMessage": {
+        "description": "Title text for the sign in"
+    },
+    "profileTitle":"البيانات الشخصية",
+    "@profileTitle": {
+        "description": "Title text for the sign in"
+    },
+    "profileSaveButton":"حفظ",
+    "@profileSaveButton": {
+        "description": "Title text for the sign in"
+    },
+    "settingsTitle":"الإعدادات",
+    "@settingsTitle": {
+        "description": "Title text for the sign in"
+    },
+    "languageSettingsSubtitle":"إعدادات اللغة",
+    "@languageSettingsSubtitle": {
+        "description": "Title text for the sign in"
+    },
+    "accountSettingsSubtitle":"إعدادات الحساب",
+    "@accountSettingsSubtitle": {
+        "description": "Title text for the sign in"
+    },
+    "deleteMyAccountText":"حذف الحساب الخاص بي",
+    "@deleteMyAccountText": {
+        "description": "Title text for the sign in"
+    },
+    "signOutButtonText":"تسجيل الخروج",
+    "@signOutButtonText": {
+        "description": "Title text for the sign in"
+    }
+}
