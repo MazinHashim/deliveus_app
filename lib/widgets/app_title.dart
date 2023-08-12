@@ -17,6 +17,7 @@ class AppTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.all(15),
       child: Row(
@@ -24,14 +25,16 @@ class AppTitle extends StatelessWidget {
             isAuth ? MainAxisAlignment.start : MainAxisAlignment.center,
         children: [
           if (!isAuth)
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.arrow_back_ios_new_rounded,
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Icon(Icons.arrow_back_ios),
               ),
             ),
+          // const Icon(Icons.arrow_back_ios),
           if (!isAuth) const Spacer(),
           if (icon != null)
             Icon(
@@ -49,12 +52,12 @@ class AppTitle extends StatelessWidget {
           if (isAuth)
             TextButton.icon(
               label: Text(
-                context.l10n.localeName == 'en' ? 'Arabic' : 'English',
+                l10n.localeName == 'en' ? 'Arabic' : 'English',
                 style: TextStyle(color: Theme.of(context).primaryColor),
               ),
               onPressed: () => context.read<AppBloc>().add(
                     AppLanguageChanged(
-                      Locale(context.l10n.localeName == 'en' ? 'ar' : 'en'),
+                      Locale(l10n.localeName == 'en' ? 'ar' : 'en'),
                     ),
                   ),
               icon: Icon(

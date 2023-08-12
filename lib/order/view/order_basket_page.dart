@@ -1,6 +1,9 @@
 import 'package:deleveus_app/app/app.dart';
+import 'package:deleveus_app/delivery/delivery.dart';
+import 'package:deleveus_app/home/widgets/acitve_order_widget.dart';
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
-import 'package:deleveus_app/widgets/delivery_options_sheet.dart';
+import 'package:deleveus_app/order/view/order_details.dart';
 import 'package:deleveus_app/widgets/widgets.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
@@ -18,24 +21,30 @@ class OrderBasketPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // print(Directionality.of(context).name);
-    return Scaffold(
-      body: BlocProvider.value(
-        value: orderBloc,
-        child: const OrderBasketView(),
+    return BlocProvider.value(
+      value: orderBloc,
+      child: Scaffold(
+        body: OrderBasketView(orderBloc: orderBloc),
       ),
     );
   }
 }
 
 class OrderBasketView extends StatelessWidget {
-  const OrderBasketView({super.key});
+  const OrderBasketView({
+    required this.orderBloc,
+    super.key,
+  });
+
+  final OrderBloc orderBloc;
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SafeArea(
       child: Column(
         children: [
           const Divider(),
-          const AppTitle(title: 'Basket', icon: Icons.shopping_cart_rounded),
+          AppTitle(title: l10n.basketTitle, icon: Icons.shopping_cart_rounded),
           const Divider(),
           const SizedBox(height: 20),
           BlocConsumer<OrderBloc, OrderState>(
@@ -57,20 +66,15 @@ class OrderBasketView extends StatelessWidget {
             },
             builder: (context, state) {
               if (state.orderItems.isEmpty) {
-                // if (state.order.status == OrderStatus.progressing) {
-                //   return const Center(
-                //     child: CircularProgressIndicator(strokeWidth: 1),
-                //   );
-                // } else {
                 return Center(
-                  heightFactor: 32,
-                  child: Text(
-                    'No items in the basket', //"l10n.foodEmptyListText",
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
+                  child: Text(l10n.orderItemEmptyListText),
                 );
-                // }
               }
+              final currentActiveOrder = state.prevOrders.where(
+                (order) =>
+                    order.status != OrderStatus.received &&
+                    order.status != OrderStatus.failure,
+              );
               return Expanded(
                 child: Column(
                   children: [
@@ -93,8 +97,8 @@ class OrderBasketView extends StatelessWidget {
                               .read<OrderBloc>()
                               .add(const ClearOrderItemsEvent());
                         },
-                        icon: const Icon(Icons.remove_circle_rounded),
-                        label: const Text('Clear Items'),
+                        icon: const Icon(Icons.remove_circle_outline_rounded),
+                        label: Text(l10n.clearItemsButton),
                       ),
                     ),
                     const Spacer(),
@@ -102,43 +106,86 @@ class OrderBasketView extends StatelessWidget {
                         state.order.destinationLong != null)
                       Flexible(
                         child: Text(
-                            '${state.order.destinationLat} ${state.order.destinationLong}'),
+                            '${l10n.deliverToDestinationText} ${state.order.destinationLat} ${state.order.destinationLong}'),
                       ),
                     if (state.order.fromBranch != null)
-                      Flexible(child: Text('${state.order.fromBranch}')),
-                    Flexible(
-                      child: buildOrderNowButton(
-                        state.totalAmount,
-                        (state.order.fromBranch == null &&
-                                (state.order.destinationLat == null &&
-                                    state.order.destinationLong == null))
-                            ? () {
-                                showModalBottomSheet<DeliveryOptionsSheet>(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (_) => const DeliveryOptionsSheet(),
-                                );
-                              }
-                            : state.order.status == OrderStatus.progressing
-                                ? null
-                                : () {
-                                    final order = state.order.copyWith(
-                                      amount: state.totalAmount,
-                                      orderDate: DateTime.now(),
-                                      orderItems: state.orderItems,
-                                      status: OrderStatus.ordered,
-                                      userId:
-                                          context.read<AppBloc>().state.user.id,
-                                    );
-                                    context.read<OrderBloc>().add(
-                                          OrderFoodForCustomerEvent(
-                                            order: order,
-                                          ),
-                                        );
-                                    // Navigator.of(context).push(OrderDetails);
-                                  },
+                      Flexible(
+                        child: Text(
+                          '${l10n.pickupFromBranchText} ${state.order.fromBranch}',
+                        ),
                       ),
-                    ),
+                    if (currentActiveOrder.isNotEmpty)
+                      ActiveOrder(currentActiveOrder.first)
+                    else
+                      Flexible(
+                        child: buildOrderNowButton(
+                          l10n,
+                          state.totalAmount,
+                          (state.order.fromBranch == null &&
+                                  (state.order.destinationLat == null &&
+                                      state.order.destinationLong == null))
+                              ? () {
+                                  // showModalBottomSheet<DeliveryPage>(
+                                  //   context: context,
+                                  //   backgroundColor: Colors.transparent,
+                                  //   isScrollControlled: true,
+                                  //   showDragHandle: true,
+                                  //   builder: (_) => Padding(
+                                  //    padding: const EdgeInsets.only(top: 20),
+                                  //    child: DeliveryPage(orderBloc: orderBloc),
+                                  //   ),
+                                  // );
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute<DeliveryPage>(
+                                      builder: (context) =>
+                                          DeliveryPage(orderBloc: orderBloc),
+                                    ),
+                                  );
+                                  //showModalBottomSheet<DeliveryOptionsSheet>(
+                                  //context: context,
+                                  //backgroundColor: Colors.transparent,
+                                  //builder: (_) => const DeliveryOptionsSheet(),
+                                  //);
+                                }
+                              : state.order.status == OrderStatus.progressing
+                                  ? null
+                                  : () {
+                                      final taxFee =
+                                          state.totalAmount * (15 / 100);
+                                      final order = state.order.copyWith(
+                                        orderNumber: 1427,
+                                        amount: state.totalAmount,
+                                        orderDate: DateTime.now(),
+                                        orderItems: state.orderItems,
+                                        destinationLat:
+                                            state.order.destinationLat,
+                                        destinationLong:
+                                            state.order.destinationLong,
+                                        fromBranch: state.order.fromBranch,
+                                        taxFee: taxFee,
+                                        deliveryFee: 12,
+                                        status: OrderStatus.ordered,
+                                        userId: context
+                                            .read<AppBloc>()
+                                            .state
+                                            .user
+                                            .id,
+                                      );
+
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute<OrderDetails>(
+                                          builder: (_) => BlocProvider.value(
+                                            value: orderBloc,
+                                            child: OrderDetails(
+                                              order: order,
+                                              orderBloc: orderBloc,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                        ),
+                      ),
                   ],
                 ),
               );
@@ -158,6 +205,7 @@ class OrderBasketView extends StatelessWidget {
       itemCount: orderItems.length,
       itemBuilder: (context, index) {
         final orderItem = orderItems[index];
+        final l10n = context.l10n;
         return Padding(
           padding: const EdgeInsets.all(12),
           child: Dismissible(
@@ -174,7 +222,7 @@ class OrderBasketView extends StatelessWidget {
                   SnackBar(
                     backgroundColor: Theme.of(context).primaryColor,
                     content: Text(
-                      '${orderItem.title} removed from the basket',
+                      '${orderItem.title} ${l10n.successRemoveItem}',
                     ),
                   ),
                 );
@@ -206,7 +254,7 @@ class OrderBasketView extends StatelessWidget {
               minLeadingWidth: 2,
               title: Text(orderItem.title!),
               trailing: Text(
-                'SAR ${orderItem.price!.toStringAsFixed(2)}',
+                '${l10n.rialText} ${orderItem.price!.toStringAsFixed(2)}',
               ),
             ),
           ),
@@ -215,7 +263,8 @@ class OrderBasketView extends StatelessWidget {
     );
   }
 
-  SizedBox buildOrderNowButton(double totalAmount, VoidCallback? onTap) {
+  SizedBox buildOrderNowButton(
+      AppLocalizations l10n, double totalAmount, VoidCallback? onTap) {
     return SizedBox(
       width: 200,
       child: ElevatedButton(
@@ -223,12 +272,12 @@ class OrderBasketView extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              'ORDER NOW',
-              style: TextStyle(fontSize: 12),
+            Text(
+              l10n.orderNowButton,
+              style: const TextStyle(fontSize: 12),
             ),
             Text(
-              'SAR ${totalAmount.toStringAsFixed(2)}',
+              '${l10n.rialText} ${totalAmount.toStringAsFixed(2)}',
               style: const TextStyle(fontSize: 12),
             ),
           ],

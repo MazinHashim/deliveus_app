@@ -1,3 +1,4 @@
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +22,9 @@ class MapConfirmCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.of(context).size.height / 3.7,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -49,7 +51,7 @@ class MapConfirmCard extends StatelessWidget {
                 flex: 4,
                 child: Text(description),
               ),
-              const Spacer(),
+              // const Spacer(),
               Flexible(
                 child: Image.asset(image, width: 60),
               ),
@@ -61,12 +63,12 @@ class MapConfirmCard extends StatelessWidget {
             builder: (context, order) {
               if (order.destinationLat != position.latitude &&
                   order.destinationLong != position.longitude) {
-                return const SizedBox(
+                return SizedBox(
                   width: double.infinity,
                   child: Text(
-                    'Please confirm the location you selected',
+                    l10n.confirmLocationMessageText,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.green),
+                    style: const TextStyle(color: Colors.green),
                   ),
                 );
               }
@@ -77,9 +79,9 @@ class MapConfirmCard extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: onTap,
-              child: const Text(
-                'Confirm The Location',
-                style: TextStyle(fontSize: 17),
+              child: Text(
+                l10n.confirmLocationButtonText,
+                style: const TextStyle(fontSize: 17),
               ),
             ),
           ),

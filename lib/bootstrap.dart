@@ -45,15 +45,15 @@ Future<void> bootstrap() async {
   await authenticationRepository.user.first;
   final userRepository = UserRepository();
 
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.dumpErrorToConsole(details);
-    runApp(
-      Directionality(
-        textDirection: TextDirection.ltr,
-        child: ErrorWidgetClass(errorDetails: details),
-      ),
-    );
-  };
+  // FlutterError.onError = (FlutterErrorDetails details) {
+  //   FlutterError.dumpErrorToConsole(details);
+  //   runApp(
+  //     Directionality(
+  //       textDirection: TextDirection.ltr,
+  //       child: ErrorWidgetClass(errorDetails: details),
+  //     ),
+  //   );
+  // };
 
   // runZonedGuarded(
   //   () =>

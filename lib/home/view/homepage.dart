@@ -1,6 +1,7 @@
 import 'package:deleveus_app/app/app.dart';
 import 'package:deleveus_app/delivery/delivery.dart';
 import 'package:deleveus_app/home/bloc/food_menu_bloc.dart';
+import 'package:deleveus_app/home/widgets/acitve_order_widget.dart';
 import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:deleveus_app/profile/profile.dart';
@@ -36,8 +37,7 @@ class HomePage extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => FoodMenuBloc(_foodRepository)
-              ..add(const FetchFoodOrFilterdEvent('all')),
+            create: (_) => FoodMenuBloc(_foodRepository),
           ),
           BlocProvider(create: (_) => orderBloc),
           // BlocProvider(create: (_) => deliveryBloc)
@@ -61,35 +61,44 @@ class HomeView extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 50),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(width: 10),
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute<OrderBasketPage>(
-                      builder: (context) => OrderBasketPage(
-                        orderBloc: orderBloc,
-                        appBloc: context.read<AppBloc>(),
-                      ),
-                    ),
-                  ),
-                  icon: Icon(
-                    Icons.shopping_cart_rounded,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
                 BlocBuilder<OrderBloc, OrderState>(
-                  builder: (context, state) => Badge(
-                    alignment: Alignment.center,
-                    label: Text('${state.orderItems.length}'),
-                    backgroundColor: Colors.red,
-                  ),
+                  builder: (context, state) => state.orderItems.isEmpty
+                      ? Container()
+                      : Badge(
+                          padding: l10n.localeName == 'en'
+                              ? const EdgeInsets.all(7)
+                              : const EdgeInsets.only(
+                                  top: 5,
+                                  bottom: 7,
+                                  right: 7,
+                                  left: 7,
+                                ),
+                          largeSize: l10n.localeName == 'en' ? 25 : 20,
+                          label: Text('${state.orderItems.length}'),
+                          backgroundColor: Colors.red,
+                          child: IconButton(
+                            padding: EdgeInsets.zero,
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute<OrderBasketPage>(
+                                builder: (context) => OrderBasketPage(
+                                  orderBloc: orderBloc,
+                                  appBloc: context.read<AppBloc>(),
+                                ),
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.shopping_cart_rounded,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
                 ),
                 const Spacer(),
                 SizedBox(
@@ -187,6 +196,18 @@ class HomeView extends StatelessWidget {
               ),
             ),
             const Divider(),
+            BlocBuilder<OrderBloc, OrderState>(
+              builder: (context, state) {
+                final currentActiveOrder = state.prevOrders.where(
+                  (order) =>
+                      order.status != OrderStatus.received &&
+                      order.status != OrderStatus.failure,
+                );
+                return currentActiveOrder.isEmpty
+                    ? Container()
+                    : ActiveOrder(currentActiveOrder.first);
+              },
+            ),
             BlocConsumer<FoodMenuBloc, FoodMenuState>(
               listenWhen: (previous, current) =>
                   current.errorMessage.isNotEmpty,
@@ -269,7 +290,16 @@ class HomeView extends StatelessWidget {
           food: state.foods[index],
           orderBloc: context.read<OrderBloc>(),
         );
-        return foodListTile.animate().slideX().fadeIn();
+        return foodListTile
+            .animate()
+            .fadeIn(delay: (index * 100).ms)
+            .slide(
+              begin: const Offset(0.5, 0),
+              duration: 200.ms,
+              curve: Curves.easeOut,
+              delay: (index * 100).ms,
+            )
+            .shimmer(duration: 400.ms);
       },
     );
   }

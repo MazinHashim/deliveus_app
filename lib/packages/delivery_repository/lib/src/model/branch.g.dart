@@ -17,21 +17,42 @@ Branch _$BranchFromJson(Map<String, dynamic> json) => $checkedCreate(
           name: $checkedConvert('name', (v) => v as String?),
           address: $checkedConvert('address', (v) => v as String?),
           prepareTime: $checkedConvert('prepare_time', (v) => v as String?),
-          isOpen: $checkedConvert('is_open', (v) => v as bool?),
+          openingTime: $checkedConvert(
+            'opening_time',
+            (v) => v == null
+                ? null
+                : DateTime.fromMicrosecondsSinceEpoch(
+                    (v as Timestamp).microsecondsSinceEpoch,
+                  ),
+          ),
+          closingTime: $checkedConvert(
+            'closing_time',
+            (v) => v == null
+                ? null
+                : DateTime.fromMicrosecondsSinceEpoch(
+                    (v as Timestamp).microsecondsSinceEpoch,
+                  ),
+          ),
+          distance: $checkedConvert('distance', (v) => (v as num?)?.toDouble()),
           long: $checkedConvert('long', (v) => (v as num?)?.toDouble()),
           lat: $checkedConvert('lat', (v) => (v as num?)?.toDouble()),
         );
         return val;
       },
-      fieldKeyMap: const {'prepareTime': 'prepare_time', 'isOpen': 'is_open'},
+      fieldKeyMap: const {
+        'prepareTime': 'prepare_time',
+        'openingTime': 'opening_time',
+        'closingTime': 'closing_time'
+      },
     );
 
 Map<String, dynamic> _$BranchToJson(Branch instance) => <String, dynamic>{
       'name': instance.name,
-      // 'id': instance.id,
+      // 'id': instance.id,instance.distance
       'address': instance.address,
       'prepare_time': instance.prepareTime,
-      'is_open': instance.isOpen,
+      'opening_time': instance.openingTime,
+      'closing_time': instance.closingTime,
       'lat': instance.lat,
       'long': instance.long,
     };

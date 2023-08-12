@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:deleveus_app/delivery/delivery.dart';
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:deleveus_app/widgets/custom_error_widget.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DeliveryPage extends StatelessWidget {
@@ -44,9 +44,10 @@ class _DeliveryViewState extends State<DeliveryView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delivery Options'),
+        title: Text(l10n.deliveryOptionsTitle),
         centerTitle: true,
       ),
       body: BlocConsumer<DeliveryBloc, DeliveryState>(
@@ -63,9 +64,9 @@ class _DeliveryViewState extends State<DeliveryView> {
                 CustomErrorWidget(errorMessage: state.errorMessage),
                 const SizedBox(height: 20),
                 OutlinedButton.icon(
-                  label: const Text(
-                    'Refresh',
-                    style: TextStyle(fontSize: 17),
+                  label: Text(
+                    l10n.refreshButtonText,
+                    style: const TextStyle(fontSize: 17),
                   ),
                   icon: const Icon(Icons.refresh),
                   onPressed: () {
@@ -105,7 +106,8 @@ class _DeliveryViewState extends State<DeliveryView> {
                 ),
               ),
               if (state.orderOption == OrderOption.delivery &&
-                  state.position != null)
+                  state.position != null &&
+                  state.currentMarker != null)
                 Expanded(
                   child: Stack(
                     children: [
@@ -130,7 +132,7 @@ class _DeliveryViewState extends State<DeliveryView> {
                       ),
                       buildConfirmationCard(state, context),
                       buildCurrentLocationButton(state, context),
-                      if (state.loadingLocation) buildMapLoading(),
+                      if (state.loadingLocation) buildMapLoading(l10n),
                     ],
                   ),
                 )
@@ -166,34 +168,42 @@ class _DeliveryViewState extends State<DeliveryView> {
                         }).toSet(),
                         onMapCreated: _controller.complete,
                       ),
-                      AnimatedPositioned(
-                        duration: 500.ms,
-                        curve: Curves.easeInOut,
-                        bottom: state.pinPillPosition,
-                        left: 20,
-                        right: 20,
-                        child: MapConfirmBranchCard(
-                          branch: state.branches[0].branch!,
-                          image: 'assets/imgs/rest-pin.png',
-                          onTap: () {
-                            context.read<OrderBloc>().add(
-                                  ConfirmPickupBranchEvent(
-                                    branchId: state.branches[0].id,
-                                  ),
-                                );
-                          },
-                        ),
-                      ),
-                      if (state.loadingBranches) buildMapLoading()
+                      buildConfirmationBranchCard(state, context),
+                      if (state.loadingBranches) buildMapLoading(l10n)
                     ],
                   ),
                 )
               else
                 Center(
-                  child: Text('Cannot Access ${state.orderOption.name} Data'),
+                  child: Text('${l10n.accessingLocationsText}...'),
                 )
             ],
           );
+        },
+      ),
+    );
+  }
+
+  AnimatedPositioned buildConfirmationBranchCard(
+    DeliveryState state,
+    BuildContext context,
+  ) {
+    return AnimatedPositioned(
+      duration: 500.ms,
+      curve: Curves.easeInOut,
+      bottom: state.pinPillPosition,
+      left: 20,
+      right: 20,
+      child: MapConfirmBranchCard(
+        branch: state.branches[0].branch!,
+        image: 'assets/imgs/rest-pin.png',
+        onTap: () {
+          context.read<OrderBloc>().add(
+                ConfirmPickupBranchEvent(
+                  branchId: state.branches[0].id,
+                ),
+              );
+          Navigator.of(context).pop();
         },
       ),
     );
@@ -205,10 +215,9 @@ class _DeliveryViewState extends State<DeliveryView> {
       left: 0,
       right: 0,
       child: MapConfirmCard(
-        title: 'Delivery Checker',
+        title: context.l10n.deliveryConfirmationTitle,
         position: state.position!,
-        description:
-            'Click on the map to identify your destination and then confirm it',
+        description: context.l10n.howToselectDestinationMessage,
         image: 'assets/imgs/location.png',
         onTap: () {
           context.read<OrderBloc>().add(
@@ -216,6 +225,7 @@ class _DeliveryViewState extends State<DeliveryView> {
                   destination: state.position!,
                 ),
               );
+          Navigator.of(context).pop();
         },
       ),
     );
@@ -234,9 +244,9 @@ class _DeliveryViewState extends State<DeliveryView> {
                 context.read<DeliveryBloc>().add(const LoadGeolocationEvent());
                 await _goToTheLake(state.position!);
               },
-        label: const Text(
-          'Select My Current Location',
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+        label: Text(
+          context.l10n.selectMyCurrentLocationText,
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
         ),
         icon: const Icon(Icons.place),
         style: ButtonStyle(
@@ -252,13 +262,13 @@ class _DeliveryViewState extends State<DeliveryView> {
     );
   }
 
-  Container buildMapLoading() {
+  Container buildMapLoading(AppLocalizations l10n) {
     return Container(
       decoration: const BoxDecoration(color: Colors.black26),
-      child: const Center(
+      child: Center(
         child: Text(
-          'Loading...',
-          style: TextStyle(color: Colors.white),
+          '${l10n.loadingText}...',
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -295,7 +305,9 @@ class _DeliveryViewState extends State<DeliveryView> {
               )
             : null,
         child: Text(
-          option.name.capitalize(),
+          option == OrderOption.delivery
+              ? context.l10n.homeDeliveryButtonText
+              : context.l10n.pickupButtonText,
           style: TextStyle(
             fontSize: 18,
             color: Theme.of(context).primaryColor,

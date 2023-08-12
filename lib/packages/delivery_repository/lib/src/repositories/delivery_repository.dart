@@ -80,13 +80,23 @@ class DeliveryRepository {
   }
 
   /// Fetching Branches
-  Stream<List<Branch>> getBranches() {
+  Stream<List<Branch>> getBranches() async* {
     try {
       final snapshot = _firestore.collection('branches').snapshots();
-      return snapshot.asBroadcastStream().map<List<Branch>>((data) {
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      yield* snapshot.asBroadcastStream().map<List<Branch>>((data) {
         return data.docs.map<Branch>((e) {
           final dataWithId = e.data()..addAll({'id': e.id});
-          return Branch.fromJson(dataWithId);
+          final distance = Geolocator.distanceBetween(
+            position.latitude,
+            position.longitude,
+            double.parse(dataWithId['lat'].toString()),
+            double.parse(dataWithId['long'].toString()),
+          );
+          final dataWithDs = dataWithId..addAll({'distance': distance});
+          return Branch.fromJson(dataWithDs);
         }).toList();
       });
     } on firebase_firestore.FirebaseException catch (e) {

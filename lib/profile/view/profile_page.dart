@@ -47,9 +47,7 @@ class ProfileView extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: EdgeInsets.only(
-                  top: max(MediaQuery.of(context).size.height / 7, 20),
-                ),
+                padding: const EdgeInsets.only(top: 22),
                 child: ProfileForm(state: state),
               ),
             ),

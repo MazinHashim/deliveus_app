@@ -48,7 +48,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       theme: theme.copyWith(
         textTheme: locale.languageCode == 'ar'
-            ? GoogleFonts.cairoTextTheme().copyWith(
+            ? GoogleFonts.tajawalTextTheme().copyWith(
                 bodyLarge:
                     const TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
                 labelLarge:

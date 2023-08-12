@@ -115,5 +115,126 @@
     "signOutButtonText":"تسجيل الخروج",
     "@signOutButtonText": {
         "description": "Title text for the sign in"
+    },
+    "basketTitle":"طلباتي",
+    "@basketTitle": {
+        "description": "Title text for the sign in"
+    },
+    "orderItemEmptyListText":"قائمة طلباتك فارغة",
+    "@orderItemEmptyListText": {
+        "description": "Title text for the sign in"
+    },
+    "clearItemsButton":"مسح قائمة طلباتك",
+    "@clearItemsButton": {
+        "description": "Title text for the sign in"
+    },
+    "deliverToDestinationText":"توصيل إلى",
+    "@deliverToDestinationText": {
+        "description": "Title text for the sign in"
+    },
+    "pickupFromBranchText":"الإستلام من",
+    "@pickupFromBranchText": {
+        "description": "Title text for the sign in"
+    },
+    "pickupButtonText":"الإستلام",
+    "@pickupButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "orderNowButton":"أطلب الأن",
+    "@orderNowButton": {
+        "description": "Title text for the sign in"
+    },
+    "rialText":"ريال",
+    "@rialText": {
+        "description": "Title text for the sign in"
+    },
+    "successRemoveItem":"تمت إزالته من قائمة طلباتك",
+    "@successRemoveItem": {
+        "description": "Title text for the sign in"
+    },
+    "nutritionalInfoText":"نسب السعرات الحرارية",
+    "@nutritionalInfoText":{
+        "description": "Title text for the sign in"
+    },
+    "caloriesUnitText":"سعرة",
+    "@caloriesUnitText":{
+        "description": "Title text for the sign in"
+    },
+    "changeQuantityText": "تم إضافة الكمية",
+    "@changeQuantityText": {
+        "description": "Title text for the sign in"
+    },
+    "updateOrderButton": "تعديل الطلب",
+    "@updateOrderButton": {
+        "description": "Title text for the sign in"
+    },
+    "addToOrderButton": "إضافة إلى الطلب",
+    "@addToOrderButton": {
+        "description": "Title text for the sign in"
+    },
+
+    "orderHidtoryTitle":"الطلبات السابقة",
+    "@orderHidtoryTitle": {
+        "description": "Title text for the sign in"
+    },
+    "deliveryOptionsTitle":"خيارات الإستلام",
+    "@deliveryOptionsTitle": {
+        "description": "Title text for the sign in"
+    },
+    "refreshButtonText":"إعادة المحاولة",
+    "@refreshButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "accessingLocationsText":"جاري الوصول لبيانات الموقع",
+    "@accessingLocationsText": {
+        "description": "Title text for the sign in"
+    },
+    "deliveryConfirmationTitle":"التحقق من الموقع",
+    "@deliveryConfirmationTitle": {
+        "description": "Title text for the sign in"
+    },
+    "howToselectDestinationMessage":"أضعط على أي مكان في الخريطة لتحديد الوجهة أو قم بإختيار موقعك الحالي و من ثم قم بتأكيد الموقع",
+    "@howToselectDestinationMessage": {
+        "description": "Title text for the sign in"
+    },
+    "selectMyCurrentLocationText":"إختيار موقعي الحالي",
+    "@selecloadingTexttMyCurrentLocationText": {
+        "description": "Title text for the sign in"
+    },
+    "loadingText":"تحميل",
+    "@loadingText": {
+        "description": "Title text for the sign in"
+    },
+    "openNowText":"مفتوح الأن",
+    "@openNowText": {
+        "description": "Title text for the sign in"
+    },
+    "closedBranchText":"مغلق",
+    "@closedBranchText": {
+        "description": "Title text for the sign in"
+    },
+    "kmUnitText":"كم",
+    "@kmUnitText": {
+        "description": "Title text for the sign in"
+    },
+    "openingTimeText":"أوقات العمل",
+    "@openingTimeText": {
+        "description": "Title text for the sign in"
+    },
+    "estimatedTimeText":"وقت الإستلام المتوقع",
+    "@estimatedTimeText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmBranchButtonText":"تأكيد",
+    "@confirmBranchButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmLocationButtonText":"تأكيد الموقع",
+    "@confirmLocationButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmLocationMessageText":"الرجاء تأكيد الموقع الذي قمت بإختياره",
+    "@confirmLocationMessageText": {
+        "description": "Title text for the sign in"
     }
 }

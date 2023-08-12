@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:deleveus_app/app/app.dart';
 import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/widgets/widgets.dart';
@@ -14,11 +12,7 @@ class SettingsPage extends StatelessWidget {
     final l10n = context.l10n;
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(
-          top: max(MediaQuery.of(context).size.height / 9, 20),
-          left: 10,
-          right: 10,
-        ),
+        padding: const EdgeInsets.only(top: 22, left: 10, right: 10),
         child: Column(
           children: [
             const Divider(),

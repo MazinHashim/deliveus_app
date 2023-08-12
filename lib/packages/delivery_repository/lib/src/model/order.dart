@@ -20,7 +20,10 @@ class Order extends Equatable {
     required this.id,
     this.userId,
     this.orderItems,
+    this.orderNumber,
     this.amount,
+    this.taxFee,
+    this.deliveryFee,
     this.status,
     this.orderDate,
     this.waitingTime,
@@ -39,8 +42,17 @@ class Order extends Equatable {
   /// The Order order_items
   final List<OrderItem>? orderItems;
 
+  /// The Order orderNumber.
+  final int? orderNumber;
+
   /// The Order amount.
   final double? amount;
+
+  /// The Order taxFee.
+  final double? taxFee;
+
+  /// The Order deliveryFee.
+  final double? deliveryFee;
 
   /// The Order status.
   final OrderStatus? status;
@@ -69,7 +81,10 @@ class Order extends Equatable {
     String? userId,
     String? id,
     List<OrderItem>? orderItems,
+    int? orderNumber,
     double? amount,
+    double? deliveryFee,
+    double? taxFee,
     OrderStatus? status,
     DateTime? orderDate,
     String? waitingTime,
@@ -82,14 +97,17 @@ class Order extends Equatable {
       userId: userId ?? this.userId,
       id: id ?? this.id,
       orderItems: orderItems ?? this.orderItems,
+      orderNumber: orderNumber ?? this.orderNumber,
       amount: amount ?? this.amount,
       status: status ?? this.status,
       orderDate: orderDate ?? this.orderDate,
-      waitingTime: waitingTime ?? this.waitingTime,
-      deliveryTime: deliveryTime ?? this.deliveryTime,
-      fromBranch: fromBranch ?? this.fromBranch,
-      destinationLat: destinationLat ?? this.destinationLat,
-      destinationLong: destinationLong ?? this.destinationLong,
+      deliveryFee: deliveryFee ?? this.deliveryFee,
+      taxFee: taxFee ?? this.taxFee,
+      waitingTime: waitingTime,
+      deliveryTime: deliveryTime,
+      fromBranch: fromBranch,
+      destinationLat: destinationLat,
+      destinationLong: destinationLong,
     );
   }
 
@@ -104,11 +122,14 @@ class Order extends Equatable {
         userId,
         id,
         orderItems,
+        orderNumber,
         amount,
         status,
         orderDate,
         waitingTime,
         deliveryTime,
+        deliveryFee,
+        taxFee,
         fromBranch,
         destinationLat,
         destinationLong,

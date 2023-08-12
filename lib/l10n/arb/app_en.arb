@@ -115,5 +115,125 @@
     "signOutButtonText":"Sign Out",
     "@signOutButtonText": {
         "description": "Title text for the sign in"
+    },
+    "basketTitle":"Basket",
+    "@basketTitle": {
+        "description": "Title text for the sign in"
+    },
+    "orderItemEmptyListText":"No items in the basket",
+    "@orderItemEmptyListText": {
+        "description": "Title text for the sign in"
+    },
+    "clearItemsButton":"Clear Items",
+    "@clearItemsButton": {
+        "description": "Title text for the sign in"
+    },
+    "deliverToDestinationText":"Deliver to",
+    "@deliverToDestinationText": {
+        "description": "Title text for the sign in"
+    },
+    "pickupFromBranchText":"Pickup from",
+    "@pickupFromBranchText": {
+        "description": "Title text for the sign in"
+    },
+    "pickupButtonText":"Pickup",
+    "@pickupButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "orderNowButton":"ORDER NOW",
+    "@orderNowButton": {
+        "description": "Title text for the sign in"
+    },
+    "rialText":"SAR",
+    "@rialText": {
+        "description": "Title text for the sign in"
+    },
+    "successRemoveItem":"removed from the basket",
+    "@successRemoveItem": {
+        "description": "Title text for the sign in"
+    },
+    "nutritionalInfoText":"NUTRITIONAL INFORMATION",
+    "@nutritionalInfoText":{
+        "description": "Title text for the sign in"
+    },
+    "caloriesUnitText":"kcal",
+    "@caloriesUnitText":{
+        "description": "Title text for the sign in"
+    },
+    "changeQuantityText": "Quantity Added",
+    "@changeQuantityText": {
+        "description": "Title text for the sign in"
+    },
+    "updateOrderButton": "UPDATE ORDER",
+    "@updateOrderButton": {
+        "description": "Title text for the sign in"
+    },
+    "addToOrderButton": "ADD TO ORDER",
+    "@addToOrderButton": {
+        "description": "Title text for the sign in"
+    },
+    "orderHidtoryTitle":"Orders History",
+    "@orderHidtoryTitle": {
+        "description": "Title text for the sign in"
+    },
+    "deliveryOptionsTitle":"Delivery Options",
+    "@deliveryOptionsTitle": {
+        "description": "Title text for the sign in"
+    },
+    "refreshButtonText":"Refresh",
+    "@refreshButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "accessingLocationsText":"Accessing Locations",
+    "@accessingLocationsText": {
+        "description": "Title text for the sign in"
+    },
+    "deliveryConfirmationTitle":"Delivery Checker",
+    "@deliveryConfirmationTitle": {
+        "description": "Title text for the sign in"
+    },
+    "howToselectDestinationMessage":"Click on the map to identify your destination or select your current location and then confirm it",
+    "@howToselectDestinationMessage": {
+        "description": "Title text for the sign in"
+    },
+    "selectMyCurrentLocationText":"Select My Current Location",
+    "@selecloadingTexttMyCurrentLocationText": {
+        "description": "Title text for the sign in"
+    },
+    "loadingText":"Loading",
+    "@loadingText": {
+        "description": "Title text for the sign in"
+    },
+    "openNowText":"Open Now",
+    "@openNowText": {
+        "description": "Title text for the sign in"
+    },
+    "closedBranchText":"Closed",
+    "@closedBranchText": {
+        "description": "Title text for the sign in"
+    },
+    "kmUnitText":"km",
+    "@kmUnitText": {
+        "description": "Title text for the sign in"
+    },
+    "openingTimeText":"Opening Time",
+    "@openingTimeText": {
+        "description": "Title text for the sign in"
+    },
+    "estimatedTimeText":"Estimated Pickup time",
+    "@estimatedTimeText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmBranchButtonText":"Confirm",
+    "@confirmBranchButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmLocationButtonText":"Confirm The Location",
+    "@confirmLocationButtonText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmLocationMessageText":"Please confirm the location you selected",
+    "@confirmLocationMessageText": {
+        "description": "Title text for the sign in"
     }
 }

@@ -62,7 +62,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     Emitter<OrderState> emit,
   ) {
     emit(
-      state.copyWith(order: state.order.copyWith(fromBranch: event.branchId)),
+      state.copyWith(
+        order: state.order.copyWith(fromBranch: event.branchId),
+      ),
     );
   }
 
@@ -111,13 +113,6 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     Emitter<OrderState> emit,
   ) async {
     try {
-      emit(
-        state.copyWith(
-          order: state.order.copyWith(
-            status: OrderStatus.progressing,
-          ),
-        ),
-      );
       await _orderRepository.saveOrder(event.order);
       //final items = state.prevOrders.toList(growable: true)..add(event.order);
       add(const ClearOrderItemsEvent());
@@ -126,6 +121,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           // prevOrders: items,
           order: state.order.copyWith(
             status: OrderStatus.initial,
+            destinationLat: state.order.destinationLat,
+            destinationLong: state.order.destinationLong,
+            fromBranch: state.order.fromBranch,
           ),
         ),
       );

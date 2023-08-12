@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -19,7 +20,9 @@ class Branch extends Equatable {
     this.name,
     this.address,
     this.prepareTime,
-    this.isOpen,
+    this.openingTime,
+    this.closingTime,
+    this.distance,
     this.long,
     this.lat,
   });
@@ -36,8 +39,14 @@ class Branch extends Equatable {
   /// The branch prepareTime.
   final String? prepareTime;
 
-  /// The branch isOpen.
-  final bool? isOpen;
+  /// The branch openingTime.
+  final DateTime? openingTime;
+
+  /// The branch closingTime.
+  final DateTime? closingTime;
+
+  /// The branch distance
+  final double? distance;
 
   /// The branch lat.
   final double? lat;
@@ -52,7 +61,9 @@ class Branch extends Equatable {
     String? name,
     String? address,
     String? prepareTime,
-    bool? isOpen,
+    DateTime? openingTime,
+    DateTime? closingTime,
+    double? distance,
     double? lat,
     double? long,
   }) {
@@ -61,7 +72,8 @@ class Branch extends Equatable {
       name: name ?? this.name,
       address: address ?? this.address,
       prepareTime: prepareTime ?? this.prepareTime,
-      isOpen: isOpen ?? this.isOpen,
+      openingTime: openingTime ?? this.openingTime,
+      distance: distance ?? this.distance,
       lat: lat ?? this.lat,
       long: long ?? this.long,
     );
@@ -79,7 +91,9 @@ class Branch extends Equatable {
         id,
         address,
         prepareTime,
-        isOpen,
+        openingTime,
+        closingTime,
+        distance,
         lat,
         long,
       ];

@@ -15,6 +15,8 @@ class FoodMenuBloc extends Bloc<FoodMenuEvent, FoodMenuState> {
         emit(state.copyWith(errorMessage: ''));
       },
     );
+
+    add(const FetchFoodOrFilterdEvent('all'));
   }
 
   final FoodRepository _foodRepository;

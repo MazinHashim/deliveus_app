@@ -1,4 +1,5 @@
 import 'package:deleveus_app/food_details/food_details.dart';
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class FoodListTile extends StatelessWidget {
   final Food food;
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Padding(
       padding: const EdgeInsets.all(2),
       child: InkWell(
@@ -54,7 +56,7 @@ class FoodListTile extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'SAR ${food.price!.toStringAsFixed(2)}',
+                  '${l10n.rialText} ${food.price!.toStringAsFixed(2)}',
                   style: const TextStyle(fontSize: 15, color: Colors.black),
                 ),
               ),

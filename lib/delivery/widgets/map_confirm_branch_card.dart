@@ -1,8 +1,10 @@
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:delivery_repository/delivery_repository.dart' show Branch;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
+import 'package:intl/intl.dart';
 
 class MapConfirmBranchCard extends StatelessWidget {
   const MapConfirmBranchCard({
@@ -17,6 +19,15 @@ class MapConfirmBranchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final closingTime = branch.closingTime!.subtract(
+      Duration(
+        days: branch.closingTime!.difference(branch.openingTime!).inDays,
+      ),
+    );
+    final isOpen = DateTime.now().isAfter(branch.openingTime!) &&
+        DateTime.now().isAfter(closingTime);
+
     return Container(
       height: MediaQuery.of(context).size.height / 4,
       decoration: BoxDecoration(
@@ -47,13 +58,14 @@ class MapConfirmBranchCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      branch.isOpen! ? 'Open Now' : 'Closed',
+                      isOpen ? l10n.openNowText : l10n.closedBranchText,
                       style: TextStyle(
-                        color: branch.isOpen! ? Colors.green : Colors.red,
+                        color: isOpen ? Colors.green : Colors.red,
                       ),
                     ),
                     const Spacer(),
-                    const Text('2.6 km')
+                    Text(
+                        '${branch.distance!.toStringAsFixed(0)} ${l10n.kmUnitText}')
                   ],
                 ),
                 Row(
@@ -69,7 +81,8 @@ class MapConfirmBranchCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text('Opening Time : ${branch.prepareTime!}'),
+                Text(
+                    '${l10n.openingTimeText} : ${DateFormat('h:mm a').format(branch.openingTime!)} - ${DateFormat('h:mm a').format(branch.closingTime!)}'),
               ],
             ),
           ),
@@ -89,9 +102,9 @@ class MapConfirmBranchCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Estimated Pickup time : ${branch.prepareTime!}',
+                      '${l10n.estimatedTimeText} : ${branch.prepareTime!}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                     if (confirmedBranchId.isEmpty ||
                         confirmedBranchId != branch.id)
@@ -103,17 +116,17 @@ class MapConfirmBranchCard extends StatelessWidget {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: const Row(
+                          child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.check_circle,
                                 size: 15,
                                 color: Colors.white,
                               ),
-                              SizedBox(width: 5),
+                              const SizedBox(width: 5),
                               Text(
-                                'Confirm',
-                                style: TextStyle(color: Colors.white),
+                                l10n.confirmBranchButtonText,
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ],
                           ),

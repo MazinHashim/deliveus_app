@@ -25,7 +25,7 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       emit(state.copyWith(errorMessage: ''));
     });
 
-    add(const LoadGeolocationEvent());
+    add(const OrderOptionChangedEvent(OrderOption.delivery));
   }
 
   final DeliveryRepository _deliveryRepository;

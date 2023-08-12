@@ -1,7 +1,22 @@
+import 'package:deleveus_app/delivery/delivery.dart';
+import 'package:deleveus_app/order/order.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DeliveryOptionsSheet extends StatelessWidget {
+class DeliveryOptionsSheet extends StatefulWidget {
   const DeliveryOptionsSheet({super.key});
+
+  @override
+  State<DeliveryOptionsSheet> createState() => _DeliveryOptionsSheetState();
+}
+
+class _DeliveryOptionsSheetState extends State<DeliveryOptionsSheet> {
+  late OrderOption selectedOption = OrderOption.delivery;
+  void selectOrderOption(OrderOption op) {
+    setState(() {
+      selectedOption = op;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +44,7 @@ class DeliveryOptionsSheet extends StatelessWidget {
             children: [
               Text(
                 'Delivery Options',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ],
           ),
@@ -43,12 +55,37 @@ class DeliveryOptionsSheet extends StatelessWidget {
               buildAppDeliveryOption(
                 context,
                 'Deliver to an address',
-                isSelected: true,
+                isSelected: selectedOption == OrderOption.delivery,
+                onTap: () {
+                  selectOrderOption(OrderOption.delivery);
+                },
               ),
               const SizedBox(width: 20),
-              buildAppDeliveryOption(context, 'Pickup from a restaurant'),
+              buildAppDeliveryOption(
+                context,
+                'Pickup from a restaurant',
+                isSelected: selectedOption == OrderOption.pickup,
+                onTap: () {
+                  selectOrderOption(OrderOption.pickup);
+                },
+              ),
               const SizedBox(width: 10),
             ],
+          ),
+          const Spacer(),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<DeliveryPage>(
+                    builder: (context) =>
+                        DeliveryPage(orderBloc: context.read<OrderBloc>()),
+                  ),
+                );
+              },
+              child: Text('Choose a destination'.toUpperCase()),
+            ),
           )
         ],
       ),
@@ -58,12 +95,15 @@ class DeliveryOptionsSheet extends StatelessWidget {
   Expanded buildAppDeliveryOption(
     BuildContext context,
     String title, {
+    required VoidCallback onTap,
     bool isSelected = false,
   }) {
     return Expanded(
       child: InkWell(
-        onTap: isSelected ? null : () {},
-        child: Container(
+        onTap: isSelected ? null : onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.bounceInOut,
           height: MediaQuery.of(context).size.height / 6,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),

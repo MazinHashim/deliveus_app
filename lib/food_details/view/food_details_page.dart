@@ -1,3 +1,4 @@
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class FoodDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     var totalAmount = 0;
     for (final cal in food.calories!) {
       totalAmount += cal.amount!;
@@ -46,11 +48,11 @@ class FoodDetailsView extends StatelessWidget {
             children: [
               buildFoodDetailsImage(),
               const SizedBox(height: 20),
-              buildDescriptionAndPriceText(),
+              buildDescriptionAndPriceText(l10n),
               const SizedBox(height: 25),
               const Divider(),
               ExpansionTile(
-                title: const Text('NUTRITIONAL INFORMATION'),
+                title: Text(l10n.nutritionalInfoText),
                 tilePadding: EdgeInsets.zero,
                 trailing: Container(
                   padding: const EdgeInsets.symmetric(vertical: 5),
@@ -64,12 +66,15 @@ class FoodDetailsView extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('$totalAmount kcal', softWrap: true),
+                      Text(
+                        '$totalAmount ${l10n.caloriesUnitText}',
+                        softWrap: true,
+                      ),
                       const Icon(Icons.keyboard_arrow_down_sharp)
                     ],
                   ),
                 ),
-                children: calories(),
+                children: calories(l10n),
               ),
               const Spacer(),
               const Divider(),
@@ -111,11 +116,11 @@ class FoodDetailsView extends StatelessWidget {
                         width: 150,
                         child: orderItem.isNotEmpty &&
                                 orderItem.first.quantity == state.quantity
-                            ? const Padding(
-                                padding: EdgeInsets.all(13),
+                            ? Padding(
+                                padding: const EdgeInsets.all(13),
                                 child: Text(
-                                  'Quantity Added',
-                                  style: TextStyle(fontSize: 18),
+                                  l10n.changeQuantityText,
+                                  style: const TextStyle(fontSize: 18),
                                   textAlign: TextAlign.center,
                                 ),
                               )
@@ -138,8 +143,8 @@ class FoodDetailsView extends StatelessWidget {
                                   children: [
                                     Text(
                                       orderItem.isNotEmpty
-                                          ? 'UPDATE ORDER'
-                                          : 'ADD TO ORDER',
+                                          ? l10n.updateOrderButton
+                                          : l10n.addToOrderButton,
                                       style: const TextStyle(fontSize: 12),
                                     ),
                                     Text(
@@ -182,19 +187,19 @@ class FoodDetailsView extends StatelessWidget {
     );
   }
 
-  List<Row> calories() {
+  List<Row> calories(AppLocalizations l10n) {
     return food.calories!.map((e) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(e.title!),
-          Text('${e.amount} kcal'),
+          Text('${e.amount} ${l10n.caloriesUnitText}'),
         ],
       );
     }).toList();
   }
 
-  Row buildDescriptionAndPriceText() {
+  Row buildDescriptionAndPriceText(AppLocalizations l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -217,7 +222,7 @@ class FoodDetailsView extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Text(
-              'SAR ${food.price!.toStringAsFixed(2)}',
+              '${l10n.rialText} ${food.price!.toStringAsFixed(2)}',
               textAlign: TextAlign.center,
             ),
           ),
