@@ -4,6 +4,7 @@ import 'package:delivery_repository/delivery_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'delivery_event.dart';
@@ -61,9 +62,16 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
           throw DeliveryFailure(error.toString());
         });
         final latLong = LatLng(position.latitude, position.longitude);
+        final placemark = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+        final address =
+            '${placemark.first.locality}, ${placemark.first.subLocality}, ${placemark.first.thoroughfare}';
         emit(
           state.copyWith(
             position: latLong,
+            address: address,
             loadingLocation: false,
             currentMarker: MarkerInfo(
               id: 'current',
@@ -124,9 +132,16 @@ class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
       imgsrc,
     );
 
+    final placemark = await placemarkFromCoordinates(
+      event.position.latitude,
+      event.position.longitude,
+    );
+    final address =
+        '${placemark.first.locality},${placemark.first.subLocality},${placemark.first.thoroughfare}';
     emit(
       state.copyWith(
         loadingLocation: false,
+        address: address,
         currentMarker: MarkerInfo(
           id: 'current',
           position: event.position,

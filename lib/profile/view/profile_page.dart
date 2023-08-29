@@ -1,9 +1,9 @@
-import 'dart:math';
-
 import 'package:deleveus_app/app/app.dart';
+import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/profile/bloc/profile_bloc.dart';
 import 'package:deleveus_app/profile/profile.dart';
 import 'package:deleveus_app/profile/view/profile_form.dart';
+import 'package:deleveus_app/widgets/app_page_widget.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,31 +29,26 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocConsumer<ProfileBloc, ProfileState>(
-        listener: (context, state) {
-          if (state.status.isFailure) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage ?? 'Authentication Failure'),
-                ),
-              );
-          }
-        },
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 22),
-                child: ProfileForm(state: state),
+    final l10n = context.l10n;
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        if (state.status.isFailure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage ?? 'Authentication Failure'),
               ),
-            ),
-          );
-        },
-      ),
+            );
+        }
+      },
+      builder: (context, state) {
+        return AppPageWidget(
+          title: l10n.profileTitle,
+          space: 100,
+          child: ProfileForm(state: state),
+        );
+      },
     );
   }
 }

@@ -1,12 +1,12 @@
 import 'package:deleveus_app/delivery/delivery.dart';
-import 'package:deleveus_app/home/widgets/acitve_order_widget.dart';
 import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
+import 'package:deleveus_app/utils/utils.dart';
+import 'package:deleveus_app/widgets/widgets.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
-import 'package:intl/intl.dart';
 
 class OrderDetails extends StatelessWidget {
   const OrderDetails({
@@ -22,47 +22,67 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    var ord = order;
+    if (order.orderNumber == null) {
+      final orderNumber = context
+          .select<OrderBloc, int?>((value) => value.state.order.orderNumber);
+      ord = order.copyWith(
+        address: order.address,
+        destinationLat: order.destinationLat,
+        destinationLong: order.destinationLong,
+        fromBranch: order.fromBranch,
+        cookingTime: order.cookingTime,
+        orderingTime: order.orderingTime,
+        deliveringTime: order.deliveringTime,
+        orderNumber: orderNumber,
+      );
+    }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Order Details'),
-      ),
-      body: Padding(
+    return AppPageWidget(
+      title: l10n.orderDetailsTitle,
+      space: 15,
+      child: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
             ListTile(
               title: Text(
-                'ORDER #${order.orderNumber}',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                '${l10n.orderText} ${ord.orderNumber != null ? '#${ord.orderNumber}' : ''}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
               contentPadding: EdgeInsets.zero,
               subtitle: Text(
-                DateFormat('d-MMM-yyyy h:mm:ss a').format(order.orderDate!),
+                DateFormat('d-MMM-yyyy h:mm:ss a').format(ord.orderDate!),
               ),
               trailing: Text(
-                order.status.toString().split('.')[1].capitalize(),
-                style: TextStyle(color: order.status!.toColor(), fontSize: 23),
+                ord.status!.toName(l10n).capitalize(),
+                style: TextStyle(
+                  color: ord.status!.toColor(),
+                  fontSize: 23,
+                ),
               ),
             ),
             ListTile(
               title: Text(
-                order.fromBranch != null
+                ord.fromBranch != null
                     ? l10n.pickupFromBranchText
                     : l10n.deliverToDestinationText,
               ),
               contentPadding: EdgeInsets.zero,
               selected: true,
               selectedColor: Theme.of(context).primaryColor,
-              subtitle: order.fromBranch != null
-                  ? Text('${order.fromBranch}')
+              subtitle: ord.fromBranch != null
+                  ? Text('${ord.fromBranch}')
                   : Text(
-                      '${order.destinationLat} ${order.destinationLong} ${order.destinationLat} ${order.destinationLong}'),
+                      '${ord.address}',
+                    ),
               trailing: const Icon(Icons.delivery_dining_sharp),
             ),
             ListTile(
-              title: const Text('Payment Method'),
+              title: Text(l10n.paymentMethodText),
               contentPadding: EdgeInsets.zero,
               subtitle: const Text('Apple Pay'),
               selected: true,
@@ -70,7 +90,7 @@ class OrderDetails extends StatelessWidget {
               trailing: const Icon(Icons.payment_rounded),
             ),
             ...[
-              ...order.orderItems!.map(
+              ...ord.orderItems!.map(
                 (item) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Row(
@@ -100,12 +120,15 @@ class OrderDetails extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Subtotal',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  Text(
+                    l10n.subtotalText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                   RichWidget(
-                    text: '${order.amount!.toStringAsFixed(2)} ',
+                    text: '${ord.amount!.toStringAsFixed(2)} ',
                     subtext: l10n.rialText,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -119,9 +142,9 @@ class OrderDetails extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Tax (VAT) 15%'),
+                  Text(l10n.taxVATText),
                   RichWidget(
-                    text: '${order.taxFee!.toStringAsFixed(2)} ',
+                    text: '${ord.taxFee!.toStringAsFixed(2)} ',
                     subtext: l10n.rialText,
                   )
                 ],
@@ -132,9 +155,9 @@ class OrderDetails extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Delivery charge'),
+                  Text(l10n.deliveryChargeText),
                   RichWidget(
-                    text: '${order.deliveryFee!.toStringAsFixed(2)} ',
+                    text: '${ord.deliveryFee!.toStringAsFixed(2)} ',
                     subtext: l10n.rialText,
                   ),
                 ],
@@ -145,13 +168,16 @@ class OrderDetails extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Total',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  Text(
+                    l10n.totalText,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                   RichWidget(
                     text:
-                        '${(order.amount! + order.deliveryFee! + order.taxFee!).toStringAsFixed(2)} ',
+                        '${(ord.amount! + ord.deliveryFee! + ord.taxFee!).toStringAsFixed(2)} ',
                     subtext: l10n.rialText,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -159,31 +185,29 @@ class OrderDetails extends StatelessWidget {
                 ],
               ),
             ),
-            const Spacer(),
+            // const Spacer(),
             BlocBuilder<OrderBloc, OrderState>(
               builder: (context, state) {
-                final currentActiveOrder = state.prevOrders.where(
-                  (order) =>
-                      order.status != OrderStatus.received &&
-                      order.status != OrderStatus.failure,
-                );
+                final activeOrder = getActiveOrder(state.prevOrders);
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Card(
-                      elevation: 4,
-                      shape: ContinuousRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 30,
+                        vertical: 40,
                       ),
+                      elevation: 4,
+                      shape: const StadiumBorder(),
                       shadowColor: Colors.black,
                       child: ListTile(
-                        trailing: const Icon(Icons.delivery_dining),
+                        trailing: const Icon(Icons.directions_rounded),
                         title: selectNewOrderDestination(state.order, l10n),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    if (currentActiveOrder.isNotEmpty)
-                      ActiveOrder(currentActiveOrder.first)
+                    if (activeOrder != null)
+                      ActiveOrder(activeOrder, orderBloc)
                     else
                       SizedBox(
                         width: double.infinity,
@@ -202,14 +226,14 @@ class OrderDetails extends StatelessWidget {
                               : () {
                                   var confirmOrder = order;
                                   if (history) {
-                                    confirmOrder = order.copyWith(
+                                    confirmOrder = ord.copyWith(
                                       orderDate: DateTime.now(),
-                                      orderNumber: 1428,
-                                      status: OrderStatus.ordered,
+                                      status: OrderStatus.ordering,
                                       destinationLat:
                                           state.order.destinationLat,
                                       destinationLong:
                                           state.order.destinationLong,
+                                      address: state.order.address,
                                       fromBranch: state.order.fromBranch,
                                     );
                                   }
@@ -219,7 +243,11 @@ class OrderDetails extends StatelessWidget {
                                         ),
                                       );
                                 },
-                          child: Text(history ? 'Re-order' : 'Confirm Order'),
+                          child: Text(
+                            history
+                                ? l10n.reorderText
+                                : l10n.confirmOrderingText,
+                          ),
                         ),
                       ),
                   ],
@@ -230,21 +258,6 @@ class OrderDetails extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  Text selectNewOrderDestination(Order order, AppLocalizations l10n) {
-    if (order.fromBranch == null &&
-        (order.destinationLat == null && order.destinationLong == null)) {
-      return const Text('No Destination Selected');
-    } else {
-      if (order.fromBranch == null) {
-        return Text(
-            'New order ${l10n.deliverToDestinationText} ${order.destinationLat} ${order.destinationLong}');
-      } else {
-        return Text(
-            'New order ${l10n.pickupFromBranchText} ${order.fromBranch}');
-      }
-    }
   }
 }
 

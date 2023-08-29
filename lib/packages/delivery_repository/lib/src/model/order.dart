@@ -26,9 +26,11 @@ class Order extends Equatable {
     this.deliveryFee,
     this.status,
     this.orderDate,
-    this.waitingTime,
-    this.deliveryTime,
+    this.orderingTime,
+    this.cookingTime,
+    this.deliveringTime,
     this.fromBranch,
+    this.address,
     this.destinationLat,
     this.destinationLong,
   });
@@ -60,14 +62,20 @@ class Order extends Equatable {
   /// The Order orderDate.
   final DateTime? orderDate;
 
-  /// The Order waitingTime.
-  final String? waitingTime;
+  /// The Order orderingTime.
+  final String? orderingTime;
 
-  /// The Order deliveryTime.
-  final String? deliveryTime;
+  /// The Order cookingTime.
+  final String? cookingTime;
+
+  /// The Order deliveringTime.
+  final String? deliveringTime;
 
   /// The Order branch destination.
   final String? fromBranch;
+
+  /// The Order destination address.
+  final String? address;
 
   /// The Order destination Latitude.
   final double? destinationLat;
@@ -87,9 +95,11 @@ class Order extends Equatable {
     double? taxFee,
     OrderStatus? status,
     DateTime? orderDate,
-    String? waitingTime,
-    String? deliveryTime,
+    String? cookingTime,
+    String? orderingTime,
+    String? deliveringTime,
     String? fromBranch,
+    String? address,
     double? destinationLat,
     double? destinationLong,
   }) {
@@ -103,9 +113,11 @@ class Order extends Equatable {
       orderDate: orderDate ?? this.orderDate,
       deliveryFee: deliveryFee ?? this.deliveryFee,
       taxFee: taxFee ?? this.taxFee,
-      waitingTime: waitingTime,
-      deliveryTime: deliveryTime,
+      cookingTime: cookingTime,
+      orderingTime: orderingTime,
+      deliveringTime: deliveringTime,
       fromBranch: fromBranch,
+      address: address,
       destinationLat: destinationLat,
       destinationLong: destinationLong,
     );
@@ -126,11 +138,13 @@ class Order extends Equatable {
         amount,
         status,
         orderDate,
-        waitingTime,
-        deliveryTime,
+        cookingTime,
+        orderingTime,
+        deliveringTime,
         deliveryFee,
         taxFee,
         fromBranch,
+        address,
         destinationLat,
         destinationLong,
       ];
@@ -145,17 +159,17 @@ enum OrderStatus {
   progressing,
 
   ///
-  ordered,
+  failure,
 
   ///
-  processing,
+  ordering,
 
   ///
-  shipped,
+  cooking,
 
   ///
-  received,
+  delivering,
 
   ///
-  failure
+  received
 }

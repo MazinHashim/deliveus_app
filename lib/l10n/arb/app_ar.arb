@@ -128,7 +128,7 @@
     "@clearItemsButton": {
         "description": "Title text for the sign in"
     },
-    "deliverToDestinationText":"توصيل إلى",
+    "deliverToDestinationText":"التوصيل إلى",
     "@deliverToDestinationText": {
         "description": "Title text for the sign in"
     },
@@ -235,6 +235,90 @@
     },
     "confirmLocationMessageText":"الرجاء تأكيد الموقع الذي قمت بإختياره",
     "@confirmLocationMessageText": {
+        "description": "Title text for the sign in"
+    },
+    "orderText":"الطلب",
+    "@orderText": {
+        "description": "Title text for the sign in"
+    },
+    "itemsCountText":"من الوجبات",
+    "@itemsCountText": {
+        "description": "Title text for the sign in"
+    },
+    "orderTrackerTitle":"تعقب الطلب",
+    "@orderTrackerTitle": {
+        "description": "Title text for the sign in"
+    },
+    "orderTimeText":"وقت الطلب",
+    "@orderTimeText": {
+        "description": "Title text for the sign in"
+    },
+    "startAtText":"بدء في",
+    "@startAtText": {
+        "description": "Title text for the sign in"
+    },
+    "noStatusTimerText":"لا يوجد توقيت",
+    "@noStatusTimerText": {
+        "description": "Title text for the sign in"
+    },
+    "trackActiveOrderText":"تعقب حالة الطلب الجاري",
+    "@trackActiveOrderText": {
+        "description": "Title text for the sign in"
+    },
+    "orderDetailsTitle":"تفاصيل الطلب",
+    "@orderDetailsTitle": {
+        "description": "Title text for the sign in"
+    },
+    "paymentMethodText":"طريقة الدفع",
+    "@paymentMethodText": {
+        "description": "Title text for the sign in"
+    },
+    "subtotalText":"إجمالي الوجبات",
+    "@subtotalText": {
+        "description": "Title text for the sign in"
+    },
+    "totalText":"إجمالي الطلب",
+    "@totalText": {
+        "description": "Title text for the sign in"
+    },
+    "taxVATText":"قيمة الضريبة 15%",
+    "@taxVAText": {
+        "description": "Title text for the sign in"
+    },
+    "deliveryChargeText":"رسوم التوصيل",
+    "@deliveryChargeText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmOrderingText":"تأكيد الطلب",
+    "@confirmOrderingText": {
+        "description": "Title text for the sign in"
+    },
+    "reorderText":"إعادة الطلب",
+    "@reorderText": {
+        "description": "Title text for the sign in"
+    },
+    "thisOrderText":"هذا الطلب سيتم",
+    "@thisOrderText": {
+        "description": "Title text for the sign in"
+    },
+    "noDestinationSelectedText":"وجهة الأستملام/التوصيل غير محددة",
+    "@noDestinationSelectedText": {
+        "description": "Title text for the sign in"
+    },
+    "orderingStatusTitle":"الإنتظار",
+    "@orderingStatusTitle": {
+        "description": "Title text for the sign in"
+    },
+    "cookingStatusTitle":"التحضير",
+    "@cookingStatusTitle": {
+        "description": "Title text for the sign in"
+    },
+    "deliveringStatusTitle":"التوصيل",
+    "@deliveringStatusTitle": {
+        "description": "Title text for the sign in"
+    },
+    "receivedStatusTitle":"تم التسليم",
+    "@receivedStatusTitle": {
         "description": "Title text for the sign in"
     }
 }

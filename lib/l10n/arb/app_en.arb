@@ -235,5 +235,89 @@
     "confirmLocationMessageText":"Please confirm the location you selected",
     "@confirmLocationMessageText": {
         "description": "Title text for the sign in"
+    },
+    "orderText":"ORDER",
+    "@orderText": {
+        "description": "Title text for the sign in"
+    },
+    "itemsCountText":"items",
+    "@itemsCountText": {
+        "description": "Title text for the sign in"
+    },
+    "orderTrackerTitle":"Order Tracker",
+    "@orderTrackerTitle": {
+        "description": "Title text for the sign in"
+    },
+    "orderTimeText":"Order Time",
+    "@orderTimeText": {
+        "description": "Title text for the sign in"
+    },
+    "startAtText":"Start at",
+    "@startAtText": {
+        "description": "Title text for the sign in"
+    },
+    "noStatusTimerText":"No Timer",
+    "@noStatusTimerText": {
+        "description": "Title text for the sign in"
+    },
+    "trackActiveOrderText":"Track the active order",
+    "@trackActiveOrderText": {
+        "description": "Title text for the sign in"
+    },
+    "orderDetailsTitle":"Order Details",
+    "@orderDetailsTitle": {
+        "description": "Title text for the sign in"
+    },
+    "paymentMethodText":"Payment Method",
+    "@paymentMethodText": {
+        "description": "Title text for the sign in"
+    },
+    "subtotalText":"Subtotal",
+    "@subtotalText": {
+        "description": "Title text for the sign in"
+    },
+    "totalText":"Total",
+    "@totalText": {
+        "description": "Title text for the sign in"
+    },
+    "taxVATText":"Tax (VAT) 15%",
+    "@taxVAText": {
+        "description": "Title text for the sign in"
+    },
+    "deliveryChargeText":"Delivery charge",
+    "@deliveryChargeText": {
+        "description": "Title text for the sign in"
+    },
+    "confirmOrderingText":"Confirm Order",
+    "@confirmOrderingText": {
+        "description": "Title text for the sign in"
+    },
+    "reorderText":"Re-order",
+    "@reorderText": {
+        "description": "Title text for the sign in"
+    },
+    "thisOrderText":"This order",
+    "@thisOrderText": {
+        "description": "Title text for the sign in"
+    },
+    "noDestinationSelectedText":"No Destination Selected",
+    "@noDestinationSelectedText": {
+        "description": "Title text for the sign in"
+    },
+    "orderingStatusTitle":"Ordering",
+    "@orderingStatusTitle": {
+        "description": "Title text for the sign in"
+    },
+    "cookingStatusTitle":"Cooking",
+    "@cookingStatusTitle": {
+        "description": "Title text for the sign in"
+    },
+    "deliveringStatusTitle":"Delivering",
+    "@deliveringStatusTitle": {
+        "description": "Title text for the sign in"
+    },
+    "receivedStatusTitle":"Received",
+    "@receivedStatusTitle": {
+        "description": "Title text for the sign in"
     }
 }

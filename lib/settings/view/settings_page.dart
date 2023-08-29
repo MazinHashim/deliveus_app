@@ -10,72 +10,67 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 22, left: 10, right: 10),
-        child: Column(
-          children: [
-            const Divider(),
-            AppTitle(title: l10n.settingsTitle, icon: Icons.settings),
-            const Divider(),
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              title: Text(
-                l10n.languageSettingsSubtitle,
-                style: const TextStyle(fontSize: 18),
-              ),
-              minLeadingWidth: 0,
-              leading: const Icon(Icons.g_translate, color: Colors.black),
+    return AppPageWidget(
+      title: l10n.settingsTitle,
+      child: Column(
+        children: [
+          ListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            title: Text(
+              l10n.languageSettingsSubtitle,
+              style: const TextStyle(fontSize: 18),
             ),
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                children: [
-                  const SizedBox(width: 10),
-                  appLanguageToggle(context, 'English', 'en'),
-                  const SizedBox(width: 20),
-                  appLanguageToggle(context, 'Arabic', 'ar'),
-                  const SizedBox(width: 10),
-                ],
-              ),
+            minLeadingWidth: 0,
+            leading: const Icon(Icons.g_translate, color: Colors.black),
+          ),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: Row(
+              children: [
+                const SizedBox(width: 10),
+                appLanguageToggle(context, 'English', 'en'),
+                const SizedBox(width: 20),
+                appLanguageToggle(context, 'Arabic', 'ar'),
+                const SizedBox(width: 10),
+              ],
             ),
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.only(left: 10, right: 10, top: 20),
-              title: Text(
-                l10n.accountSettingsSubtitle,
-                style: const TextStyle(fontSize: 20),
-              ),
-              minLeadingWidth: 0,
-              leading: const Icon(Icons.account_circle, color: Colors.black),
+          ),
+          ListTile(
+            contentPadding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+            title: Text(
+              l10n.accountSettingsSubtitle,
+              style: const TextStyle(fontSize: 20),
             ),
-            ListTile(
-              onTap: () {},
-              selected: true,
-              style: ListTileStyle.drawer,
-              splashColor: Colors.red.shade100,
-              minLeadingWidth: 0,
-              selectedColor: Colors.red,
-              leading: const Icon(Icons.delete),
-              title: Text(l10n.deleteMyAccountText),
+            minLeadingWidth: 0,
+            leading: const Icon(Icons.account_circle, color: Colors.black),
+          ),
+          ListTile(
+            onTap: () {},
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+            selected: true,
+            style: ListTileStyle.drawer,
+            splashColor: Colors.red.shade100,
+            minLeadingWidth: 0,
+            selectedColor: Colors.red,
+            leading: const Icon(Icons.delete),
+            title: Text(l10n.deleteMyAccountText),
+          ),
+          const Spacer(),
+          Container(
+            margin: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                context.read<AppBloc>().add(const AppLogoutRequested());
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.logout_outlined),
+              label: Text(l10n.signOutButtonText),
             ),
-            const Spacer(),
-            Container(
-              margin: const EdgeInsets.only(bottom: 30),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  context.read<AppBloc>().add(const AppLogoutRequested());
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.logout_outlined),
-                label: Text(l10n.signOutButtonText),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

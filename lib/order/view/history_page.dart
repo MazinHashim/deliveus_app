@@ -1,11 +1,11 @@
 import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/bloc/order_bloc.dart';
 import 'package:deleveus_app/order/view/order_details.dart';
+import 'package:deleveus_app/utils/utils.dart';
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
-import 'package:intl/intl.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -32,20 +32,24 @@ class HistoryPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final order = state.prevOrders[index];
 
+              final itemsStr = order.orderItems!
+                  .map((item) => '${item.title!} x ${item.quantity} ')
+                  .toString();
+
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ListTile(
-                      title: Text('ORDER #${order.orderNumber}'),
+                      title: Text('${l10n.orderText} #${order.orderNumber}'),
                       contentPadding: EdgeInsets.zero,
                       subtitle: Text(
                         DateFormat('d MMM yyyy h:mm:ss a')
                             .format(order.orderDate!),
                       ),
                       trailing: Text(
-                        order.status.toString().split('.')[1].capitalize(),
+                        order.status!.toName(l10n).capitalize(),
                         style: TextStyle(
                           color: order.status!.toColor(),
                         ),
@@ -54,7 +58,8 @@ class HistoryPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('${order.orderItems!.length} items'),
+                        Text(
+                            '${order.orderItems!.length} ${l10n.itemsCountText}'),
                         RichText(
                           text: TextSpan(
                             text:
@@ -80,12 +85,7 @@ class HistoryPage extends StatelessWidget {
                         Flexible(
                           flex: 3,
                           child: Text(
-                            order.orderItems!
-                                .map(
-                                  (item) =>
-                                      '${item.title!} x ${item.quantity} ',
-                                )
-                                .toString(),
+                            itemsStr.substring(1, itemsStr.length - 1),
                             softWrap: true,
                           ),
                         ),
@@ -127,32 +127,5 @@ class HistoryPage extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-extension OrderStatusColor on OrderStatus {
-  Color toColor() {
-    return switch (this) {
-      OrderStatus.ordered => Colors.green,
-      OrderStatus.processing => Colors.amber,
-      OrderStatus.shipped => Colors.blue,
-      OrderStatus.received => Colors.green,
-      OrderStatus.failure => Colors.red,
-      _ => Colors.black,
-    };
-  }
-}
-
-extension OrderQuantityIcon on OrderItem {
-  IconData toIcon() {
-    return switch (quantity) {
-      1 => Icons.looks_one_rounded,
-      2 => Icons.looks_two_rounded,
-      3 => Icons.looks_3_rounded,
-      4 => Icons.looks_4_rounded,
-      5 => Icons.looks_5_rounded,
-      6 => Icons.looks_6_rounded,
-      _ => Icons.onetwothree_rounded,
-    };
   }
 }

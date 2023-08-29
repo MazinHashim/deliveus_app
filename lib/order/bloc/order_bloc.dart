@@ -21,6 +21,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     on<ConfirmPickupBranchEvent>(_confirmPickupBranch);
     on<OrderFoodForCustomerEvent>(_orderFoodForCustomer);
     on<ClearOrderItemsEvent>(_clearOrderItems);
+    on<SaveStatusTimeEvent>(_saveStatusTime);
     on<ClearOrderErrorMessageEvent>(
       (event, emit) {
         emit(state.copyWith(errorMessage: ''));
@@ -50,6 +51,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     emit(
       state.copyWith(
         order: state.order.copyWith(
+          address: event.address,
           destinationLat: event.destination.latitude,
           destinationLong: event.destination.longitude,
         ),
@@ -113,7 +115,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     Emitter<OrderState> emit,
   ) async {
     try {
-      await _orderRepository.saveOrder(event.order);
+      final orderNumber = await _orderRepository.saveOrder(event.order);
       //final items = state.prevOrders.toList(growable: true)..add(event.order);
       add(const ClearOrderItemsEvent());
       emit(
@@ -123,10 +125,37 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
             status: OrderStatus.initial,
             destinationLat: state.order.destinationLat,
             destinationLong: state.order.destinationLong,
+            orderNumber: orderNumber,
+            address: state.order.address,
             fromBranch: state.order.fromBranch,
           ),
         ),
       );
+    } on OrderFailure catch (e, _) {
+      add(OrderErrorEvent(error: e.message));
+    }
+  }
+
+  Future<void> _saveStatusTime(
+    SaveStatusTimeEvent event,
+    Emitter<OrderState> emit,
+  ) async {
+    try {
+      await _orderRepository.saveOrderStatusDuration(
+        event.oid,
+        event.prevStatus.name,
+        event.duration,
+      );
+      // final index =
+      //     state.prevOrders.indexWhere((order) => order.id == event.oid);
+      // final orders = state.prevOrders.toList(growable: true);
+      // final order = state.prevOrders[index].copyWith(
+      //   orderingTime: event.duration,
+      //   status: OrderStatus.values[event.prevStatus.index + 1],
+      // );
+      // orders[index] = order;
+
+      // emit(state.copyWith(prevOrders: orders));
     } on OrderFailure catch (e, _) {
       add(OrderErrorEvent(error: e.message));
     }

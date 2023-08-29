@@ -5,6 +5,7 @@ enum OrderOption { delivery, pickup }
 class DeliveryState extends Equatable {
   const DeliveryState({
     this.position,
+    this.address,
     this.loadingLocation = true,
     this.loadingBranches = false,
     this.currentMarker,
@@ -16,6 +17,7 @@ class DeliveryState extends Equatable {
 
   final OrderOption orderOption;
   final LatLng? position;
+  final String? address;
   final double pinPillPosition;
   final List<MarkerInfo> branches;
   final MarkerInfo? currentMarker;
@@ -26,6 +28,7 @@ class DeliveryState extends Equatable {
   DeliveryState copyWith({
     OrderOption? orderOption,
     LatLng? position,
+    String? address,
     double? pinPillPosition,
     MarkerInfo? currentMarker,
     List<MarkerInfo>? branches,
@@ -36,6 +39,7 @@ class DeliveryState extends Equatable {
     return DeliveryState(
       orderOption: orderOption ?? this.orderOption,
       position: position ?? this.position,
+      address: address ?? this.address,
       currentMarker: currentMarker ?? this.currentMarker,
       errorMessage: errorMessage ?? this.errorMessage,
       branches: branches ?? this.branches,
@@ -49,6 +53,7 @@ class DeliveryState extends Equatable {
   List<Object?> get props => [
         orderOption,
         position,
+        address,
         loadingBranches,
         loadingLocation,
         branches,

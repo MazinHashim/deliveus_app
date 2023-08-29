@@ -25,12 +25,31 @@ class RemoveItemFromOrderEvent extends OrderEvent {
   List<Object> get props => [foodId];
 }
 
+class SaveStatusTimeEvent extends OrderEvent {
+  const SaveStatusTimeEvent({
+    required this.duration,
+    required this.oid,
+    required this.prevStatus,
+  });
+
+  final String duration;
+  final String oid;
+  final OrderStatus prevStatus;
+
+  @override
+  List<Object> get props => [duration, prevStatus];
+}
+
 class ConfirmDestinationLocationEvent extends OrderEvent {
-  const ConfirmDestinationLocationEvent({required this.destination});
+  const ConfirmDestinationLocationEvent({
+    required this.destination,
+    required this.address,
+  });
+  final String address;
   final LatLng destination;
 
   @override
-  List<Object> get props => [destination];
+  List<Object> get props => [destination, address];
 }
 
 class ConfirmPickupBranchEvent extends OrderEvent {

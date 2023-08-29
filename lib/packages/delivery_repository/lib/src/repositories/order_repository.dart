@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart' as firebase_firestore;
 import 'package:delivery_repository/delivery_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// {@template order_failure}
 /// Thrown during the order manipulation if a failure occurs.
@@ -58,10 +57,52 @@ class OrderRepository {
   final _itemsStreamController =
       BehaviorSubject<List<OrderItem>>.seeded(const []);
 
+  /// The key used for storing the last status locally.
+  ///
+  /// This is only exposed for testing and shouldn't be used by consumers of
+  /// this library
+  @visibleForTesting
+  static const kLastStatus = '__last_status_key__';
+
   /// Add Order data for specific user
-  Future<void> saveOrder(Order order) async {
+  Future<int> saveOrder(Order order) async {
     try {
-      await _firestore.collection('orders').doc().set(order.toJson());
+      final hasDocs = await _firestore
+          .collection('orders')
+          .orderBy('order_date', descending: true)
+          .limit(1)
+          .get();
+      final data = order.toJson();
+      var lastOrderNumber = 999;
+      if (hasDocs.docs.isEmpty) {
+        data['order_number'] =
+            firebase_firestore.FieldValue.increment(lastOrderNumber + 1);
+      } else {
+        lastOrderNumber = hasDocs.docs.first.data()['order_number'] as int;
+        data['order_number'] =
+            firebase_firestore.FieldValue.increment(lastOrderNumber + 1);
+      }
+
+      await _firestore.collection('orders').doc().set(data);
+      print('${lastOrderNumber + 1}');
+      return lastOrderNumber + 1;
+    } on firebase_firestore.FirebaseException catch (e) {
+      throw OrderFailure.fromCode(e.code);
+    } catch (_) {
+      throw const OrderFailure();
+    }
+  }
+
+  /// Save Order Status when its done
+  Future<void> saveOrderStatusDuration(
+    String oid,
+    String status,
+    String duration,
+  ) async {
+    try {
+      await _firestore.collection('orders').doc(oid).update({
+        '${status.toLowerCase()}_time': duration,
+      });
     } on firebase_firestore.FirebaseException catch (e) {
       throw OrderFailure.fromCode(e.code);
     } catch (_) {

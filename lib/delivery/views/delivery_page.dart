@@ -222,6 +222,7 @@ class _DeliveryViewState extends State<DeliveryView> {
         onTap: () {
           context.read<OrderBloc>().add(
                 ConfirmDestinationLocationEvent(
+                  address: state.address!,
                   destination: state.position!,
                 ),
               );
