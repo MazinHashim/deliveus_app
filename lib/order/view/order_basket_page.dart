@@ -171,6 +171,7 @@ class OrderBasketView extends StatelessWidget {
   ) {
     return ListView.builder(
       itemCount: orderItems.length,
+      physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
       itemBuilder: (context, index) {
         final orderItem = orderItems[index];
         final l10n = context.l10n;

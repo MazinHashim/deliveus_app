@@ -1,6 +1,7 @@
 import 'package:deleveus_app/app/app.dart';
 import 'package:deleveus_app/delivery/delivery.dart';
 import 'package:deleveus_app/home/home.dart';
+import 'package:deleveus_app/home/widgets/widgets.dart';
 import 'package:deleveus_app/l10n/l10n.dart';
 import 'package:deleveus_app/order/order.dart';
 import 'package:deleveus_app/profile/profile.dart';
@@ -61,90 +62,106 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
+      floatingActionButton: ExpandableFab(
+        distance: 112,
+        children: [
+          ActionButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<Widget>(builder: (_) => const SearchPage()),
+              );
+            },
+            icon: const Icon(Icons.search),
+          ),
+          ActionButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<Widget>(builder: (_) => const ProfilePage()),
+              );
+            },
+            icon: const Icon(Icons.account_circle),
+          ),
+          ActionButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<Widget>(builder: (_) => const SettingsPage()),
+              );
+            },
+            icon: const Icon(Icons.settings),
+          ),
+          ActionButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<Widget>(
+                  builder: (_) => BlocProvider<OrderBloc>.value(
+                    value: context.read<OrderBloc>(),
+                    child: const HistoryPage(),
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.history),
+          ),
+        ],
+      ),
       body: Column(
         children: [
-          ClipPath(
-            clipper: HeaderClipper(),
-            child: Container(
-              height: 130,
-              padding: const EdgeInsets.only(top: 10),
-              color: Theme.of(context).primaryColorLight.withOpacity(0.7),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Spacer(),
-                  BlocBuilder<OrderBloc, OrderState>(
-                    builder: (context, state) => state.orderItems.isEmpty
-                        ? Container()
-                        : Badge(
-                            padding: l10n.localeName == 'en'
-                                ? const EdgeInsets.all(7)
-                                : const EdgeInsets.only(
-                                    top: 5,
-                                    bottom: 7,
-                                    right: 7,
-                                    left: 7,
+          Stack(
+            children: [
+              ClipPath(
+                clipper: HeaderClipper(),
+                child: Container(
+                  height: 130,
+                  padding: const EdgeInsets.only(top: 10),
+                  color: Theme.of(context).primaryColorLight.withOpacity(0.7),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (l10n.localeName == 'en') const Spacer(),
+                      BlocBuilder<OrderBloc, OrderState>(
+                        builder: (context, state) => state.orderItems.isEmpty
+                            ? Container()
+                            : Badge(
+                                padding: l10n.localeName == 'en'
+                                    ? const EdgeInsets.all(7)
+                                    : const EdgeInsets.only(
+                                        top: 5,
+                                        bottom: 7,
+                                        right: 7,
+                                        left: 7,
+                                      ),
+                                largeSize: l10n.localeName == 'en' ? 25 : 20,
+                                label: Text('${state.orderItems.length}'),
+                                backgroundColor: Colors.red,
+                                child: IconButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute<OrderBasketPage>(
+                                      builder: (context) => OrderBasketPage(
+                                        orderBloc: orderBloc,
+                                        appBloc: context.read<AppBloc>(),
+                                      ),
+                                    ),
                                   ),
-                            largeSize: l10n.localeName == 'en' ? 25 : 20,
-                            label: Text('${state.orderItems.length}'),
-                            backgroundColor: Colors.red,
-                            child: IconButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute<OrderBasketPage>(
-                                  builder: (context) => OrderBasketPage(
-                                    orderBloc: orderBloc,
-                                    appBloc: context.read<AppBloc>(),
+                                  icon: Icon(
+                                    Icons.shopping_cart_rounded,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               ),
-                              icon: Icon(
-                                Icons.shopping_cart_rounded,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ),
-                  ),
-                  const Spacer(),
-                  SizedBox(
-                    width: 100,
-                    child: Image.asset('assets/imgs/ic_deleveus.png'),
-                  ),
-                  const Spacer(),
-                  PopupMenuButton<MenuOptions>(
-                    onSelected: (value) {
-                      final route = getRouteForSelectedOption(value, context);
-                      Navigator.of(context).push(
-                        MaterialPageRoute<Widget>(builder: (_) => route),
-                      );
-                    },
-                    itemBuilder: (ctx) => [
-                      _buildPopupMenuItem(
-                        l10n.homeSearchOptionText,
-                        Icons.search,
-                        MenuOptions.search,
                       ),
-                      _buildPopupMenuItem(
-                        l10n.homeSettingsOptionText,
-                        Icons.settings,
-                        MenuOptions.settings,
+                      const Spacer(),
+                      SizedBox(
+                        width: 100,
+                        child: Image.asset('assets/imgs/ic_deleveus.png'),
                       ),
-                      _buildPopupMenuItem(
-                        l10n.homeProfileOptionText,
-                        Icons.account_circle,
-                        MenuOptions.profile,
-                      ),
-                      _buildPopupMenuItem(
-                        l10n.homeHistoryOptionText,
-                        Icons.history,
-                        MenuOptions.history,
-                      ),
+                      const Spacer(),
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(10),
@@ -291,6 +308,7 @@ class HomeView extends StatelessWidget {
   MasonryGridView appMenuListView(FoodMenuState state) {
     return MasonryGridView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 10),
+      physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
       gridDelegate: const SliverSimpleGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
@@ -317,6 +335,7 @@ class HomeView extends StatelessWidget {
   ListView appFilterChoiceChip(FoodMenuState state) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
+      physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
       itemCount: state.categories.length,
       itemBuilder: (context, index) {
         return Padding(

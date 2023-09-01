@@ -18,10 +18,11 @@ class VerifyPhoneNumberFailure implements Exception {
   /// https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/createUserWithPhoneNumber.html
   factory VerifyPhoneNumberFailure.fromCode(String code) {
     switch (code) {
-      case 'account-exists-with-different-credential':
+      case 'too-many-requests':
         return const VerifyPhoneNumberFailure(
-          'Account exists with different credentials.',
+          'We have blocked all requests from this device due to unusual activity. Try again later.',
         );
+
       case 'invalid-credential':
         return const VerifyPhoneNumberFailure(
           'The credential received is malformed or has expired.',
@@ -34,14 +35,6 @@ class VerifyPhoneNumberFailure implements Exception {
         return const VerifyPhoneNumberFailure(
           'This user has been disabled. Please contact support for help.',
         );
-      case 'user-not-found':
-        return const VerifyPhoneNumberFailure(
-          'Email is not found, please create an account.',
-        );
-      case 'wrong-password':
-        return const VerifyPhoneNumberFailure(
-          'Incorrect password, please try again.',
-        );
       case 'invalid-verification-code':
         return const VerifyPhoneNumberFailure(
           'The credential verification code received is invalid.',
@@ -49,6 +42,10 @@ class VerifyPhoneNumberFailure implements Exception {
       case 'invalid-verification-id':
         return const VerifyPhoneNumberFailure(
           'The credential verification ID received is invalid.',
+        );
+      case 'unknown':
+        return const VerifyPhoneNumberFailure(
+          'An internal error has occurred.',
         );
       default:
         return const VerifyPhoneNumberFailure();
@@ -133,8 +130,8 @@ class AuthenticationRepository {
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw VerifyPhoneNumberFailure.fromCode(e.code);
-    } catch (_) {
-      throw const VerifyPhoneNumberFailure();
+    } catch (e) {
+      throw VerifyPhoneNumberFailure(e.toString());
     }
   }
 

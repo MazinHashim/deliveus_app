@@ -4,7 +4,7 @@ class OrderState extends Equatable {
   const OrderState({
     this.orderItems = const [],
     this.order = const Order(id: '', status: OrderStatus.initial),
-    this.prevOrders = const [],
+    this.prevOrders,
     this.totalAmount = 0.0,
     this.quantity = 1,
     this.errorMessage = '',
@@ -12,7 +12,7 @@ class OrderState extends Equatable {
 
   final List<OrderItem> orderItems;
   final Order order;
-  final List<Order> prevOrders;
+  final List<Order>? prevOrders;
   final double totalAmount;
   final int quantity;
   final String errorMessage;

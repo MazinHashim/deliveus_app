@@ -33,6 +33,8 @@ class SigninView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<PhoneAuthBloc, PhoneAuthState>(
+        listenWhen: (previous, current) =>
+            previous.errorMessage != current.errorMessage,
         listener: (context, state) {
           if (state.status.isFailure) {
             ScaffoldMessenger.of(context)

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "315781797492-73qgbgbirv7114jgaj2655snafndk01g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.deleveus.org.deleveus_app",
+            "certificate_hash": "58987dca2bf4fdd11d54a32d2ef436ab78ad0315"
+          }
+        },
+        {
           "client_id": "315781797492-so7le58iqsunqnsc5s8eglm7o3q7o0pp.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "315781797492-so7le58iqsunqnsc5s8eglm7o3q7o0pp.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "315781797492-4d3nm5cotre53igv0v626t7o5d3c62i1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.deleveus.org.deleveus-app"
+              }
             }
           ]
         }

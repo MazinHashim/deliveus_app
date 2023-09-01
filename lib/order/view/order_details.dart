@@ -44,6 +44,7 @@ class OrderDetails extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: ListView(
+          physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
           children: [
             ListTile(
               title: Text(

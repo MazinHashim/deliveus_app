@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 
 const kLastStatus = '__last_status_key__';
 
-Order? getActiveOrder(List<Order> prevOrders) {
+Order? getActiveOrder(List<Order>? prevOrders) {
+  if (prevOrders == null) {
+    return null;
+  }
   final currentActiveOrder = prevOrders.where(
     (order) =>
         order.status != OrderStatus.received &&

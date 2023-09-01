@@ -111,19 +111,23 @@ class OrderRepository {
   }
 
   /// Fetching Orders Data as order history for specific user
-  Stream<List<Order>> getOrders(String userId) {
+  Stream<List<Order>?> getOrders(String userId) {
     try {
       final snapshot = _firestore
           .collection('orders')
           .where('user_id', isEqualTo: userId)
           .orderBy('order_date', descending: true)
           .snapshots();
-      return snapshot.asBroadcastStream().map<List<Order>>(
-            (data) => data.docs.map<Order>((e) {
-              final dataWithId = e.data()..addAll({'id': e.id});
-              return Order.fromJson(dataWithId);
-            }).toList(),
-          );
+
+      return snapshot.asBroadcastStream().map<List<Order>?>((data) {
+        if (data.size == 0) {
+          return null;
+        }
+        return data.docs.map<Order>((e) {
+          final dataWithId = e.data()..addAll({'id': e.id});
+          return Order.fromJson(dataWithId);
+        }).toList();
+      });
     } on firebase_firestore.FirebaseException catch (e) {
       throw OrderFailure.fromCode(e.code);
     } catch (_) {

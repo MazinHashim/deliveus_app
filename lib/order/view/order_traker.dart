@@ -78,7 +78,7 @@ class _OrderTrackerState extends State<OrderTracker> {
     return BlocBuilder<OrderBloc, OrderState>(
       builder: (context, state) {
         var activeOrder = getActiveOrder(state.prevOrders);
-        activeOrder ??= state.prevOrders.first;
+        activeOrder ??= state.prevOrders!.first;
 
         // final orderStatusTime = OrderStatus
         //     .values[lastStatus.index - 1]
@@ -190,7 +190,7 @@ class _OrderTrackerState extends State<OrderTracker> {
 
     return Step(
       title: Text(
-        '${status.toName(l10n)}',
+        status.toName(l10n),
         style: TextStyle(
           color: status.index <= activeOrder.status!.index
               ? Colors.black

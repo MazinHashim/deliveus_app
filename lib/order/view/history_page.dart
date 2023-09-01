@@ -20,17 +20,21 @@ class HistoryPage extends StatelessWidget {
       ),
       body: BlocBuilder<OrderBloc, OrderState>(
         builder: (context, state) {
-          if (state.prevOrders.isEmpty) {
+          if (state.prevOrders == null) {
+            return const Center(child: Text('No Orders In The History'));
+          }
+          if (state.prevOrders!.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
           return ListView.separated(
             separatorBuilder: (_, __) => const Divider(),
-            itemCount: state.prevOrders.length,
+            physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
+            itemCount: state.prevOrders!.length,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
             itemBuilder: (context, index) {
-              final order = state.prevOrders[index];
+              final order = state.prevOrders![index];
 
               final itemsStr = order.orderItems!
                   .map((item) => '${item.title!} x ${item.quantity} ')

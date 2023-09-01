@@ -79,14 +79,11 @@ class PhoneAuthBloc extends Bloc<PhoneAuthEvent, PhoneAuthState> {
     Emitter<PhoneAuthState> emit,
   ) async {
     if (!event.isResend) {
-      emit(
-        state.copyWith(
-          status: FormzSubmissionStatus.inProgress,
-        ),
-      );
       if (!state.isValid) return;
+      emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
     }
     try {
+      emit(state.copyWith(errorMessage: ''));
       await _authenticationRepository.verifyPhone(
         phoneNumber: event.phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {

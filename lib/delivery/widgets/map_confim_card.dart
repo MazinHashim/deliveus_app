@@ -10,12 +10,14 @@ class MapConfirmCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.position,
+    required this.address,
     required this.image,
     required this.onTap,
     super.key,
   });
   final String title;
   final String description;
+  final String address;
   final LatLng position;
   final VoidCallback onTap;
   final String image;
@@ -24,7 +26,7 @@ class MapConfirmCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Container(
-      height: MediaQuery.of(context).size.height / 3.7,
+      height: MediaQuery.of(context).size.height / 3.3,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
@@ -57,7 +59,6 @@ class MapConfirmCard extends StatelessWidget {
               ),
             ],
           ),
-          const Spacer(),
           BlocSelector<OrderBloc, OrderState, Order>(
             selector: (state) => state.order,
             builder: (context, order) {
@@ -65,16 +66,28 @@ class MapConfirmCard extends StatelessWidget {
                   order.destinationLong != position.longitude) {
                 return SizedBox(
                   width: double.infinity,
-                  child: Text(
-                    l10n.confirmLocationMessageText,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.green),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.confirmLocationMessageText,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.green),
+                      ),
+                      Text(
+                        address,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }
               return const SizedBox();
             },
           ),
+          const Spacer(),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(

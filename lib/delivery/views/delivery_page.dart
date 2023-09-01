@@ -217,6 +217,7 @@ class _DeliveryViewState extends State<DeliveryView> {
       child: MapConfirmCard(
         title: context.l10n.deliveryConfirmationTitle,
         position: state.position!,
+        address: state.address!,
         description: context.l10n.howToselectDestinationMessage,
         image: 'assets/imgs/location.png',
         onTap: () {
