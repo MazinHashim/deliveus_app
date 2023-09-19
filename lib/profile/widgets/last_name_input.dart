@@ -26,7 +26,7 @@ class LastNameInput extends StatelessWidget {
             labelText: l10n.profileLastNameLabel,
             helperText: '',
             errorText: state.lastName.displayError != null
-                ? l10n.profileFirstNameErrorMessage
+                ? l10n.profileLastNameErrorMessage
                 : null,
           ),
         );

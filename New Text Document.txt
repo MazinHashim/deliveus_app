@@ -1,0 +1,7 @@
+[done] history when its empty should show message
+[TODO] phone number should entered without country code
+[done] arabic lang option hide app mune
+[done] show location address when it's selected
+[done] change ripple color for list view
+[TODO] add search functionallity
+[TODO] handling error messages

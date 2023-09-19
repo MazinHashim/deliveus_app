@@ -14,7 +14,8 @@ class PhoneInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.phone != current.phone,
       builder: (context, state) {
         return TextFormField(
-          initialValue: state.user!.phone,
+          initialValue:
+              state.user!.phone!.replaceFirst(RegExp('^[+]{1}966'), ''),
           readOnly: true,
           key: const Key('profile_phoneInput_textField'),
           onChanged: (phone) =>
