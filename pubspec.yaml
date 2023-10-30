@@ -31,7 +31,7 @@ dependencies:
   google_maps_flutter: ^2.3.1
   intl_translation: ^0.18.2
   meta: ^1.9.1
-  slide_countdown: ^0.6.0
+  slide_countdown: ^1.0.2
 
 dev_dependencies:
   bloc_test: ^9.1.2
